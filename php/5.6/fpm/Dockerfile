@@ -34,5 +34,6 @@ RUN docker-php-ext-install \
 # Copy configuration
 COPY config/php.ini /usr/local/etc/php/
 COPY config/php-fpm.conf /usr/local/etc/
+COPY config/pool.d /usr/local/etc/pool.d
 
 WORKDIR /var/www
