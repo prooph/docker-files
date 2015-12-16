@@ -2,7 +2,7 @@ FROM prooph/php:5.6-fpm
 
 # Additional extensions
 RUN apt-get update \
-    && apt-get install -y less \
+    && apt-get install -y unzip less \
     # for zip extension
     zlib1g-dev \
     && rm -r /var/lib/apt/lists/*
@@ -26,8 +26,8 @@ RUN curl -o doctrine2.zip -L https://github.com/sandrokeil/Z-Ray-Doctrine2/archi
     && unzip -o /tmp/doctrine2.zip -d /opt/zray/runtime/var/plugins/ \
     && mv /opt/zray/runtime/var/plugins/Z-Ray-Doctrine2-master /opt/zray/runtime/var/plugins/doctrine2
 
-RUN ln -fs /opt/zray/lib/zray.so /usr/local/lib/php/extensions/no-debug-non-zts-20131226/zray.so \
-    && ln -fs /opt/zray/zray.ini /usr/local/etc/php/conf.d/zray.ini \
+RUN ln -fs /opt/zray/lib/zray.so `php -r "echo ini_get('extension_dir');"`/zray.so \
+    && ln -fs /opt/zray/zray.ini $PHP_INI_DIR/conf.d/zray.ini \
     && chown -R www-data:www-data /opt/zray
 
 COPY config/pool.d /usr/local/etc/pool.d

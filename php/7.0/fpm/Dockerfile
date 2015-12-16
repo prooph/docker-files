@@ -2,7 +2,7 @@ FROM php:7.0-fpm
 
 # Additional extensions
 RUN apt-get update \
-    && apt-get install -y \
+    && apt-get install -y unzip \
     # for intl extension
     libicu-dev \
     && mkdir -p /var/www \
@@ -14,9 +14,7 @@ RUN apt-get update \
 # pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap
 # sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
 
-RUN docker-php-ext-configure mbstring --enable-mbstring \
-  && docker-php-ext-configure intl --enable-intl \
-  && docker-php-ext-configure opcache --enable-opcache \
+RUN docker-php-ext-configure intl --enable-intl \
   && docker-php-ext-configure pdo_mysql --with-pdo-mysql
 
 # Possible values for ext-name:
@@ -27,8 +25,6 @@ RUN docker-php-ext-configure mbstring --enable-mbstring \
 
 RUN docker-php-ext-install \
        intl \
-       mbstring \
-       opcache \
        pdo_mysql
 
 # Copy configuration
