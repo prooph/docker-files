@@ -3,8 +3,10 @@ FROM php:5.6-fpm
 # Additional extensions
 RUN apt-get update \
     && apt-get install -y unzip \
-    # for intl extension
-    libicu-dev \
+        # for intl extension
+        libicu-dev \
+        # for mcrypt extension
+        libmcrypt-dev \
     && mkdir -p /var/www \
     && rm -r /var/lib/apt/lists/*
 
@@ -15,7 +17,8 @@ RUN apt-get update \
 # sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
 
 RUN docker-php-ext-configure intl --enable-intl \
-  && docker-php-ext-configure pdo_mysql --with-pdo-mysql
+  && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
+  && docker-php-ext-configure bcmath --enable-bcmath
 
 # Possible values for ext-name:
 # bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl
@@ -24,8 +27,11 @@ RUN docker-php-ext-configure intl --enable-intl \
 # sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
 
 RUN docker-php-ext-install \
-       intl \
-       pdo_mysql
+    intl \
+    pdo_mysql \
+    bcmath \
+    mcrypt
+
 
 # Copy configuration
 COPY config/php.ini /usr/local/etc/php/

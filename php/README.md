@@ -5,8 +5,48 @@ Extends the official PHP image with the following PHP extensions:
 
 * intl 
 * pdo_mysql
+* bcmath
+* mcrypt
+* pcntl (only cli images)
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
+
+## PHP 7.0-cli
+Use the following image: `prooph/php:7.0-cli`.
+
+## PHP 7.0-cli with Opcache
+Use the following image: `prooph/php:7.0-cli-opcache`.
+
+The [PHP Opcache](http://php.net/manual/en/book.opcache.php) is not useful for development, so it's not part of the default PHP-FPM image. Use
+this image if you want to have Opcache enabled.
+
+## PHP 7.0-fpm
+Use the following image: `prooph/php:7.0-fpm`.
+
+## PHP 7.0-fpm with Opcache
+Use the following image: `prooph/php:5.6-fpm-opcache`.
+
+The [PHP Opcache](http://php.net/manual/en/book.opcache.php) is not useful for development, so it's not part of the default PHP-FPM image. Use
+this image if you want to have Opcache enabled.
+
+## PHP 7.0-fpm with Xdebug
+Use the following image: `prooph/php:7.0-fpm-xdebug`.
+
+[Xdebug](http://xdebug.org/) is a PHP debugger.
+
+Configure the Xdebug port in your IDE with `10000` and set the path mappings for the project root folder on server 
+to `/var/www`. The server name is `localhost`. Don't forget to set the Xdebug cookie in your browser to start debugging.
+
+## PHP 7.0-fpm with Zend Z-Ray (coming soon)
+
+## PHP 5.6-cli
+Use the following image: `prooph/php:5.6-cli`.
+
+## PHP 5.6-cli with Opcache
+Use the following image: `prooph/php:5.6-cli-opcache`.
+
+The [PHP Opcache](http://php.net/manual/en/book.opcache.php) is not useful for development, so it's not part of the default PHP-FPM image. Use
+this image if you want to have Opcache enabled.
 
 ## PHP 5.6-fpm
 Use the following image: `prooph/php:5.6-fpm`.
@@ -36,22 +76,4 @@ Firebug and remove the `display:none` styles of the `devbar-settings` form.
 
 Then you have to restart the Docker containers.
 
-## PHP 7.0-fpm
-Use the following image: `prooph/php:7.0-fpm`.
-
-## PHP 7.0-fpm with Opcache
-Use the following image: `prooph/php:5.6-fpm-opcache`.
-
-The [PHP Opcache](http://php.net/manual/en/book.opcache.php) is not useful for development, so it's not part of the default PHP-FPM image. Use
-this image if you want to have Opcache enabled.
-
-## PHP 7.0-fpm with Xdebug
-Use the following image: `prooph/php:7.0-fpm-xdebug`.
-
-[Xdebug](http://xdebug.org/) is a PHP debugger.
-
-Configure the Xdebug port in your IDE with `10000` and set the path mappings for the project root folder on server 
-to `/var/www`. The server name is `localhost`. Don't forget to set the Xdebug cookie in your browser to start debugging.
-
-## PHP 7.0-fpm with Zend Z-Ray (coming soon)
 

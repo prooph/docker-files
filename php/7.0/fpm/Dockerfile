@@ -3,8 +3,10 @@ FROM php:7.0-fpm
 # Additional extensions
 RUN apt-get update \
     && apt-get install -y unzip \
-    # for intl extension
-    libicu-dev \
+        # for intl extension
+        libicu-dev \
+        # for mcrypt extension
+        libmcrypt-dev \
     && mkdir -p /var/www \
     && rm -r /var/lib/apt/lists/*
 
@@ -14,8 +16,10 @@ RUN apt-get update \
 # pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap
 # sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
 
-RUN docker-php-ext-configure intl --enable-intl \
-  && docker-php-ext-configure pdo_mysql --with-pdo-mysql
+RUN docker-php-ext-configure bcmath --enable-bcmath \
+    && docker-php-ext-configure intl --enable-intl \
+    && docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql
 
 # Possible values for ext-name:
 # bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl
@@ -24,8 +28,11 @@ RUN docker-php-ext-configure intl --enable-intl \
 # sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
 
 RUN docker-php-ext-install \
-       intl \
-       pdo_mysql
+    bcmath \
+    intl \
+    mcrypt \
+    pcntl \
+    pdo_mysql
 
 # Copy configuration
 COPY config/php.ini /usr/local/etc/php/
