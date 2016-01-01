@@ -20,6 +20,20 @@ Use the following image: `prooph/php:7.0-cli-opcache`.
 The [PHP Opcache](http://php.net/manual/en/book.opcache.php) is not useful for development, so it's not part of the default PHP-FPM image. Use
 this image if you want to have Opcache enabled.
 
+## PHP 7.0-cli with Xdebug
+Use the following image: `prooph/php:7.0-cli-xdebug`.
+
+[Xdebug](http://xdebug.org/) is a PHP debugger.
+
+> xDebug is already enabled, so you have only to listen for incoming connections in your IDE. Don't forget to set the 
+path mapping in your IDE with the name *application* !
+
+Run the following command with the path to your php file.
+
+```bash
+$ docker run --rm -it --volume $(pwd):/app -e PHP_IDE_CONFIG="serverName=application" prooph/php:7.0-cli-xdebug php [your file]
+```
+
 ## PHP 7.0-fpm
 Use the following image: `prooph/php:7.0-fpm`.
 
@@ -47,6 +61,20 @@ Use the following image: `prooph/php:5.6-cli-opcache`.
 
 The [PHP Opcache](http://php.net/manual/en/book.opcache.php) is not useful for development, so it's not part of the default PHP-FPM image. Use
 this image if you want to have Opcache enabled.
+
+## PHP 5.6-cli with Xdebug
+Use the following image: `prooph/php:5.6-cli-xdebug`.
+
+[Xdebug](http://xdebug.org/) is a PHP debugger.
+
+> xDebug is already enabled, so you have only to listen for incoming connections in your IDE. Don't forget to set the 
+path mapping in your IDE with the name *application* !
+
+Run the following command with the path to your php file.
+
+```bash
+$ docker run --rm -it --volume $(pwd):/app -e PHP_IDE_CONFIG="serverName=application" prooph/php:5.6-cli-xdebug php [your file]
+```
 
 ## PHP 5.6-fpm
 Use the following image: `prooph/php:5.6-fpm`.
