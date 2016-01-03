@@ -16,5 +16,3 @@ RUN phpize \
 
 # Copy custom configuration
 COPY config/xdebug.ini /usr/local/etc/php/conf.d/
-
-WORKDIR /var/www
