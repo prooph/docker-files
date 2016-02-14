@@ -1,0 +1,27 @@
+# Composer Docker Container
+FROM prooph/php:7.0-cli
+
+# Environmental Variables
+ENV COMPOSER_HOME /root/composer
+ENV COMPOSER_VERSION master
+
+# Packages
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        libbz2-dev \
+        libzip-dev \
+        git \
+        unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install zip bz2 \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini \
+    && composer global require hirak/prestissimo
+
+# Set up the application directory
+VOLUME ["/app"]
+WORKDIR /app
+
+# Set up the command arguments
+CMD ["-"]
+ENTRYPOINT ["composer", "--ansi"]
