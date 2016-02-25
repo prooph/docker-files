@@ -1,4 +1,4 @@
-FROM php:5.6-cli
+FROM php:7.0-cli
 
 RUN apt-get update \
     && apt-get install -y \
@@ -6,9 +6,8 @@ RUN apt-get update \
       libicu-dev \
       # for mcrypt extension
       libmcrypt-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-configure bcmath --enable-bcmath \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
@@ -22,7 +21,7 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
         mbstring
 
 # Copy configuration
-COPY config/php.ini /usr/local/etc/php/
+COPY config/php-cli.ini /usr/local/etc/php/php.ini
 
 # Set up the application directory
 VOLUME ["/app"]

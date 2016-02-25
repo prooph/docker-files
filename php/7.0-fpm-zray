@@ -1,4 +1,4 @@
-FROM prooph/php:5.6-fpm
+FROM prooph/php:7.0-fpm
 
 # Additional extensions
 RUN apt-get update \
@@ -24,12 +24,12 @@ RUN curl -L http://downloads.zend.com/zray/0112/${ZRAY_VERSION}.tar.gz | tar zx 
 # Z-Ray Plugins
 RUN curl -o doctrine2.zip -L https://github.com/sandrokeil/Z-Ray-Doctrine2/archive/master.zip \
     && unzip -o /tmp/doctrine2.zip -d /opt/zray/runtime/var/plugins/ \
-    && mv /opt/zray/runtime/var/plugins/Z-Ray-Doctrine2-master /opt/zray/runtime/var/plugins/doctrine2
-
-RUN ln -fs /opt/zray/lib/zray.so `php -r "echo ini_get('extension_dir');"`/zray.so \
+    && mv /opt/zray/runtime/var/plugins/Z-Ray-Doctrine2-master /opt/zray/runtime/var/plugins/doctrine2 \
+    # configure zray
+    && ln -fs /opt/zray/lib/zray.so `php -r "echo ini_get('extension_dir');"`/zray.so \
     && ln -fs /opt/zray/zray.ini $PHP_INI_DIR/conf.d/zray.ini \
     && chown -R www-data:www-data /opt/zray
 
-COPY config/pool.d /usr/local/etc/pool.d
+COPY config/zray/pool.d /usr/local/etc/pool.d
 
 WORKDIR /var/www

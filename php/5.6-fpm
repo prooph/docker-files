@@ -1,4 +1,4 @@
-FROM php:7.0-fpm
+FROM php:5.6-fpm
 
 # Additional extensions
 RUN apt-get update \
@@ -7,7 +7,10 @@ RUN apt-get update \
         libicu-dev \
         # for mcrypt extension
         libmcrypt-dev \
+        # for mongodb
+        libssl-dev \
     && mkdir -p /var/www \
+    && pecl install mongodb \
     && rm -r /var/lib/apt/lists/*
 
 # Possible values for ext-name:
@@ -37,7 +40,8 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
 
 # Copy configuration
 COPY config/php.ini /usr/local/etc/php/
-COPY config/php-fpm.conf /usr/local/etc/
-COPY config/pool.d /usr/local/etc/pool.d
+COPY config/mongodb.ini /usr/local/etc/php/conf.d/
+COPY config/fpm/php-fpm.conf /usr/local/etc/
+COPY config/fpm/pool.d /usr/local/etc/pool.d
 
 WORKDIR /var/www

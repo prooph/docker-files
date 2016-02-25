@@ -8,7 +8,8 @@ Extends the official PHP image with the following PHP extensions:
 * bcmath
 * mcrypt
 * mbstring
-* pcntl (only cli images)
+* mongodb
+* pcntl
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 

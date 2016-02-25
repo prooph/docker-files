@@ -1,0 +1,9 @@
+FROM prooph/php:7.0-cli
+
+# XDEBUG
+RUN pecl install xdebug-2.4.0RC4
+
+# Copy custom configuration
+COPY config/xdebug-cli.ini /usr/local/etc/php/conf.d/
+
+WORKDIR /app

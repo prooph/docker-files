@@ -1,25 +1,31 @@
-FROM prooph/nginx:www
+FROM prooph/php:5.6-fpm
 
+# Additional extensions
 RUN apt-get update \
-    && apt-get install -y curl \
-    unzip \
-    && rm -r /var/lib/apt/lists/*
+    && apt-get install -y unzip less \
+    # for zip extension
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# you must also change the version in the path e.g. 0112
 ENV ZRAY_VERSION zray-php-104202-php5.6.17-linux-debian7-amd64
 
 WORKDIR /tmp
 
 # Z-Ray
-RUN curl -L http://downloads.zend.com/zray/0112/${ZRAY_VERSION}.tar.gz | tar zx \
+RUN docker-php-ext-configure zip --with-zip \
+    && docker-php-ext-install zip \
+    && curl -L http://downloads.zend.com/zray/0112/${ZRAY_VERSION}.tar.gz | tar zx \
     && mv /tmp/${ZRAY_VERSION}/zray /opt/zray \
     && rm -rf /tmp/${ZRAY_VERSION} \
     # Z-Ray Plugins
     && curl -o doctrine2.zip -L https://github.com/sandrokeil/Z-Ray-Doctrine2/archive/master.zip \
     && unzip -o /tmp/doctrine2.zip -d /opt/zray/runtime/var/plugins/ \
     && mv /opt/zray/runtime/var/plugins/Z-Ray-Doctrine2-master /opt/zray/runtime/var/plugins/doctrine2 \
+    # configure zray
+    && ln -fs /opt/zray/lib/zray.so `php -r "echo ini_get('extension_dir');"`/zray.so \
+    && ln -fs /opt/zray/zray.ini $PHP_INI_DIR/conf.d/zray.ini \
     && chown -R www-data:www-data /opt/zray
 
-COPY config/ /etc/nginx/
+COPY config/zray/pool.d /usr/local/etc/pool.d
 
 WORKDIR /var/www
