@@ -7,7 +7,10 @@ RUN apt-get update \
         libicu-dev \
         # for mcrypt extension
         libmcrypt-dev \
+        # for mongodb
+        libssl-dev \
     && mkdir -p /var/www \
+    && pecl install mongodb \
     && rm -r /var/lib/apt/lists/*
 
 # Possible values for ext-name:

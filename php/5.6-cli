@@ -6,7 +6,10 @@ RUN apt-get update \
       libicu-dev \
       # for mcrypt extension
       libmcrypt-dev \
+      # for mongodb
+      libssl-dev \
     && rm -rf /var/lib/apt/lists/* \
+    && pecl install mongodb \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
@@ -22,6 +25,7 @@ RUN apt-get update \
 
 # Copy configuration
 COPY config/php-cli.ini /usr/local/etc/php/php.ini
+COPY config/mongodb.ini /usr/local/etc/php/conf.d/
 
 # Set up the application directory
 VOLUME ["/app"]
