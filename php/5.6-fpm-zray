@@ -14,7 +14,7 @@ WORKDIR /tmp
 # Z-Ray
 RUN docker-php-ext-configure zip --with-zip \
     && docker-php-ext-install zip \
-    && curl -L http://downloads.zend.com/zray/0112/${ZRAY_VERSION}.tar.gz | tar zx \
+    && curl -L http://downloads.zend.com/zray/1102/${ZRAY_VERSION}.tar.gz | tar zx \
     && mv /tmp/${ZRAY_VERSION}/zray /opt/zray \
     && rm -rf /tmp/${ZRAY_VERSION} \
     # Z-Ray Plugins
