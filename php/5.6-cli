@@ -10,6 +10,8 @@ RUN apt-get update \
       libssl-dev \
     && rm -rf /var/lib/apt/lists/* \
     && pecl install mongodb \
+    # prooph mongo db adapter uses deprecated ext currently
+    && pecl install mongo \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \

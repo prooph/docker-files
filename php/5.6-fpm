@@ -11,6 +11,8 @@ RUN apt-get update \
         libssl-dev \
     && mkdir -p /var/www \
     && pecl install mongodb \
+    # prooph mongo db adapter uses deprecated ext currently
+    && pecl install mongo \
     && rm -r /var/lib/apt/lists/*
 
 # Possible values for ext-name:
