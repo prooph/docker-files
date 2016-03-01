@@ -11,7 +11,7 @@ ENV ZRAY_VERSION zray-php-104202-php5.6.17-linux-debian7-amd64
 WORKDIR /tmp
 
 # Z-Ray
-RUN curl -L http://downloads.zend.com/zray/0112/${ZRAY_VERSION}.tar.gz | tar zx \
+RUN curl -L http://downloads.zend.com/zray/1102/${ZRAY_VERSION}.tar.gz | tar zx \
     && mv /tmp/${ZRAY_VERSION}/zray /opt/zray \
     && rm -rf /tmp/${ZRAY_VERSION} \
     # Z-Ray Plugins
