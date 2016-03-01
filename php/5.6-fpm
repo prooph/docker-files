@@ -42,6 +42,7 @@ RUN docker-php-ext-configure bcmath --enable-bcmath \
 
 # Copy configuration
 COPY config/php.ini /usr/local/etc/php/
+COPY config/mongo.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
 COPY config/fpm/php-fpm.conf /usr/local/etc/
 COPY config/fpm/pool.d /usr/local/etc/pool.d

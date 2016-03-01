@@ -27,6 +27,7 @@ RUN apt-get update \
 
 # Copy configuration
 COPY config/php-cli.ini /usr/local/etc/php/php.ini
+COPY config/mongo.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
 
 # Set up the application directory

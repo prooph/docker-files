@@ -8,6 +8,7 @@ Extends the official PHP image with the following PHP extensions:
 * bcmath
 * mcrypt
 * mbstring
+* mongo
 * mongodb
 * pcntl
 
