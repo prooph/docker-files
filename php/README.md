@@ -11,6 +11,8 @@ Extends the official PHP image with the following PHP extensions:
 * mongo
 * mongodb
 * pcntl
+* amqp
+* zmq
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 

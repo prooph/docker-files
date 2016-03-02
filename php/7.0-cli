@@ -28,7 +28,7 @@ RUN apt-get update \
         mcrypt \
         pcntl \
         pdo_mysql \
-        mbstring
+        mbstring \
     && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx
 
 WORKDIR /zeromq-${ZEROMQ_VERSION}

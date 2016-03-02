@@ -11,6 +11,8 @@ Extends the official PHP image with the following PHP extensions and installs Co
 * mongo
 * mongodb
 * pcntl
+* amqp
+* zmq
 * zip
 * bz2
 
