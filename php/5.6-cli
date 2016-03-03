@@ -2,6 +2,8 @@ FROM php:5.6-cli
 
 ENV ZEROMQ_VERSION 4.1.4
 
+WORKDIR /app
+
 RUN apt-get update \
     && apt-get install -y \
         # for intl extension
@@ -36,12 +38,15 @@ RUN apt-get update \
         pdo_mysql \
         mbstring \
     && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx \
+    && cd zeromq-${ZEROMQ_VERSION} \
     && ./configure \
     && make \
     && make install \
     && ldconfig \
     && pecl install zmq-1.1.3 \
-    && rm -rf /zeromq-${ZEROMQ_VERSION}
+    && rm -rf /zeromq-${ZEROMQ_VERSION} \
+    && rm -rf /app \
+    && mkdir /app
 
 # Copy configuration
 COPY config/php-cli.ini /usr/local/etc/php/php.ini
@@ -54,4 +59,3 @@ COPY config/memcached.ini /usr/local/etc/php/conf.d/
 
 # Set up the application directory
 VOLUME ["/app"]
-WORKDIR /app
