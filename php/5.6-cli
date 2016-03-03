@@ -4,21 +4,25 @@ ENV ZEROMQ_VERSION 4.1.4
 
 RUN apt-get update \
     && apt-get install -y \
-      # for intl extension
-      libicu-dev \
-      # for mcrypt extension
-      libmcrypt-dev \
-      # for mongodb
-      libssl-dev \
-      # for rabbit mq
-      librabbitmq-dev \
-      # for zero mq
-      libsodium-dev \
+        # for intl extension
+        libicu-dev \
+        # for mcrypt extension
+        libmcrypt-dev \
+        # for mongodb
+        libssl-dev \
+        # for rabbit mq
+        librabbitmq-dev \
+        # for zero mq
+        libsodium-dev \
+        # for memcached
+        libmemcached-dev \
     && rm -rf /var/lib/apt/lists/* \
     && pecl install mongodb \
     # prooph mongo db adapter uses deprecated ext currently
     && pecl install mongo \
     && pecl install amqp \
+    && pecl install memcached \
+    && pecl install redis \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
@@ -31,18 +35,13 @@ RUN apt-get update \
         pcntl \
         pdo_mysql \
         mbstring \
-    && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx
-
-WORKDIR /zeromq-${ZEROMQ_VERSION}
-
-RUN ./configure \
+    && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx \
+    && ./configure \
     && make \
     && make install \
     && ldconfig \
     && pecl install zmq-1.1.3 \
     && rm -rf /zeromq-${ZEROMQ_VERSION}
-
-WORKDIR /app
 
 # Copy configuration
 COPY config/php-cli.ini /usr/local/etc/php/php.ini
@@ -50,6 +49,8 @@ COPY config/amqp.ini /usr/local/etc/php/conf.d/
 COPY config/zmq.ini /usr/local/etc/php/conf.d/
 COPY config/mongo.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
+COPY config/redis.ini /usr/local/etc/php/conf.d/
+COPY config/memcached.ini /usr/local/etc/php/conf.d/
 
 # Set up the application directory
 VOLUME ["/app"]

@@ -1,5 +1,7 @@
 # PHP Docker files
 
+> These images are only for development environments
+
 These images are available on [Docker Hub](https://hub.docker.com/r/prooph/php/). 
 Extends the official PHP image with the following PHP extensions:
 
@@ -13,6 +15,8 @@ Extends the official PHP image with the following PHP extensions:
 * pcntl
 * amqp
 * zmq
+* redis
+* memcached
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 

@@ -1,5 +1,7 @@
 # nginx Docker files
 
+> These images are only for development environments
+
 Configures nginx with SSL and HTTP/2 and some optimizations. The *vhost* uses the `/var/www/public` folder, sou you can
 mount your application to `/var/www/`. See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an
 example.

@@ -1,5 +1,7 @@
 # PHP Composer Docker files
 
+> These images are only for development environments
+
 These images are available on [Docker Hub](https://hub.docker.com/r/prooph/composer/).
 Extends the official PHP image with the following PHP extensions and installs Composer with parallel downloads plugin:
 
@@ -13,6 +15,8 @@ Extends the official PHP image with the following PHP extensions and installs Co
 * pcntl
 * amqp
 * zmq
+* redis
+* memcached
 * zip
 * bz2
 
