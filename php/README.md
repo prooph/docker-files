@@ -43,6 +43,17 @@ Run the following command with the path to your php file.
 $ docker run --rm -it --volume $(pwd):/app -e PHP_IDE_CONFIG="serverName=application" prooph/php:7.0-cli-xdebug php [your file]
 ```
 
+## PHP 7.0-cli with SensioLabs Blackfire
+Use the following image: `prooph/php:7.0-cli-blackfire`.
+
+[Blackfire](https://blackfire.io) is a PHP Profiler. No linking with Blackfire-Agent required.
+
+Run the following command with your [Blackfire](https://blackfire.io/docs/reference-guide/configuration) credentials to profile you cli PHP apps.
+
+```bash
+$ docker run --rm -it -e BLACKFIRE_SERVER_ID=[YOUR ID] -e BLACKFIRE_SERVER_TOKEN=[YOUR TOKEN] -e BLACKFIRE_CLIENT_ID=[YOUR ID] -e BLACKFIRE_CLIENT_TOKEN=[YOUR TOKEN] --volume $(pwd):/app prooph/php:7.0-cli-blackfire run php [your PHP script]
+```
+
 ## PHP 7.0-fpm
 Use the following image: `prooph/php:7.0-fpm`.
 
@@ -83,6 +94,17 @@ Run the following command with the path to your php file.
 
 ```bash
 $ docker run --rm -it --volume $(pwd):/app -e PHP_IDE_CONFIG="serverName=application" prooph/php:5.6-cli-xdebug php [your file]
+```
+
+## PHP 5.6-cli with blackfire
+Use the following image: `prooph/php:5.6-cli-blackfire`.
+
+[blackfire](https://blackfire.io) is a PHP Profiler. No linking with Blackfire-Agent required.
+
+Run the following command with your [blackfire](https://blackfire.io/docs/reference-guide/configuration) credentials to profile you cli PHP apps.
+
+```bash
+$ docker run --rm -it -e BLACKFIRE_SERVER_ID=[YOUR ID] -e BLACKFIRE_SERVER_TOKEN=[YOUR TOKEN] -e BLACKFIRE_CLIENT_ID=[YOUR ID] -e BLACKFIRE_CLIENT_TOKEN=[YOUR TOKEN] --volume $(pwd):/app prooph/php:5.6-cli-blackfire run php [your PHP script]
 ```
 
 ## PHP 5.6-fpm
