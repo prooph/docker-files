@@ -1,7 +1,7 @@
 FROM prooph/php:7.0-fpm
 
 # XDEBUG
-RUN pecl install xdebug-2.4.0RC4
+RUN pecl install xdebug
 
 # Copy custom configuration
 COPY config/xdebug.ini /usr/local/etc/php/conf.d/
