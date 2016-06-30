@@ -17,6 +17,9 @@ RUN apt-get update \
         librabbitmq-dev \
         # for zero mq
         libsodium-dev \
+        # for soap
+        libxml2 \
+        libxml2-dev \
     && mkdir -p /var/www \
     && pecl install mongodb \
     && pecl install amqp-1.7.0alpha2 \
@@ -26,6 +29,7 @@ RUN apt-get update \
     && docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
     && docker-php-ext-configure mbstring --enable-mbstring \
+    && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-install \
         bcmath \
         intl \
@@ -33,6 +37,7 @@ RUN apt-get update \
         pcntl \
         pdo_mysql \
         mbstring \
+        soap \
     && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx \
     && cd zeromq-${ZEROMQ_VERSION} \
     && ./configure \
@@ -49,14 +54,9 @@ RUN apt-get update \
 # pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap
 # sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
 
-# Possible values for ext-name:
-# bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl
-# json ldap mbstring mcrypt mssql mysql mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci
-# pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap
-# sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
-
 # Copy configuration
 COPY config/php.ini /usr/local/etc/php/
+COPY config/php7.ini /usr/local/etc/php/conf.d/
 COPY config/amqp.ini /usr/local/etc/php/conf.d/
 COPY config/zmq.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/

@@ -18,6 +18,9 @@ RUN apt-get update \
         libsodium-dev \
         # for memcached
         libmemcached-dev \
+        # for soap
+        libxml2 \
+        libxml2-dev \
     && rm -rf /var/lib/apt/lists/* \
     && pecl install mongodb \
     # prooph mongo db adapter uses deprecated ext currently
@@ -30,6 +33,7 @@ RUN apt-get update \
     && docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
     && docker-php-ext-configure mbstring --enable-mbstring \
+    && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-install \
         bcmath \
         intl \
@@ -37,6 +41,7 @@ RUN apt-get update \
         pcntl \
         pdo_mysql \
         mbstring \
+        soap \
     && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx \
     && cd zeromq-${ZEROMQ_VERSION} \
     && ./configure \
