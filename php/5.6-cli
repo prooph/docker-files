@@ -27,7 +27,7 @@ RUN apt-get update \
     && pecl install mongo \
     && pecl install amqp \
     && pecl install memcached \
-    && pecl install redis \
+    && pecl install redis-2.2.8 \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
