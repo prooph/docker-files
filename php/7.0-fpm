@@ -17,6 +17,8 @@ RUN apt-get update \
         librabbitmq-dev \
         # for zero mq
         libsodium-dev \
+        # for postgres
+        libpq-dev \
         # for soap
         libxml2 \
         libxml2-dev \
@@ -28,6 +30,7 @@ RUN apt-get update \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
+    && docker-php-ext-configure pdo_pgsql --with-pgsql \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-install \
@@ -36,6 +39,7 @@ RUN apt-get update \
         mcrypt \
         pcntl \
         pdo_mysql \
+        pdo_pgsql \
         mbstring \
         soap \
     && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx \
