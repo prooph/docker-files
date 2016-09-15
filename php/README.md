@@ -73,6 +73,14 @@ Use the following image: `prooph/php:7.0-fpm-xdebug`.
 Configure the Xdebug port in your IDE with `10000` and set the path mappings for the project root folder on server
 to `/var/www`. The server name is `localhost`. Don't forget to set the Xdebug cookie in your browser to start debugging.
 
+## PHP 7.0-fpm with Blackfire
+Use the following image: `prooph/php:7.0-fpm-blackfire`.
+
+[SensioLabs Blackfire](https://blackfire.io/) is a PHP Profiler.
+
+Please refer to the [docs](https://blackfire.io/docs/integrations/docker)to analyze your application. 
+You need the Blackfire Agent Docke image.
+
 ## PHP 7.0-fpm with Zend Z-Ray (coming soon)
 
 ## PHP 5.6-cli
@@ -98,7 +106,7 @@ Run the following command with the path to your php file.
 $ docker run --rm -it --volume $(pwd):/app -e PHP_IDE_CONFIG="serverName=application" prooph/php:5.6-cli-xdebug php [your file]
 ```
 
-## PHP 5.6-cli with blackfire
+## PHP 5.6-cli with Blackfire
 Use the following image: `prooph/php:5.6-cli-blackfire`.
 
 [blackfire](https://blackfire.io) is a PHP Profiler. No linking with Blackfire-Agent required.
