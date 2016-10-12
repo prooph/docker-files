@@ -1,29 +1,45 @@
-FROM php:7.0-cli
+FROM php:7.0-alpine
 
-ENV ZEROMQ_VERSION 4.1.4
+ENV ZEROMQ_VERSION 4.1.5
+ENV RABBITMQ_VERSION v0.8.0
+ENV PHP_AMQP_VERSION v1.7.1
+ENV PHP_REDIS_VERSION 3.0.0
+ENV PHP_ZEROMQ_VERSION master
+ENV PHP_MONGO_VERSION 1.1.8
 
-WORKDIR /app
+# persistent / runtime deps
+ENV PHPIZE_DEPS \
+    autoconf \
+    cmake \
+    file \
+    g++ \
+    gcc \
+    libc-dev \
+    make \
+    git \
+    pkgconf \
+    re2c
 
-RUN apt-get update \
-    && apt-get install -y \
-      # for intl extension
-      libicu-dev \
-      # for mcrypt extension
-      libmcrypt-dev \
-      # for mongodb
-      libssl-dev \
-      # for rabbit mq
-      librabbitmq-dev \
-      # for zero mq
-      libsodium-dev \
-      # for postgres
-      libpq-dev \
-      # for soap
-      libxml2 \
-      libxml2-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && pecl install mongodb \
-    && pecl install amqp-1.7.0alpha2 \
+RUN apk add --no-cache --virtual .persistent-deps \
+    # for intl extension
+    icu-dev \
+    # for mcrypt extension
+    libmcrypt-dev \
+    # for mongodb
+    libssl1.0 \
+    # for zero mq
+    libsodium-dev \
+    # for postgres
+    postgresql-dev \
+    # for soap
+    libxml2-dev \
+    zeromq
+
+RUN set -xe \
+    && apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+        openssl-dev \
+        zeromq-dev \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
@@ -40,13 +56,44 @@ RUN apt-get update \
         pdo_pgsql \
         mbstring \
         soap \
-    && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx \
-    && cd zeromq-${ZEROMQ_VERSION} \
-    && ./configure \
-    && make \
-    && make install \
-    && ldconfig \
-    && pecl install zmq-1.1.3 \
+    && git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
+        && cd /tmp/rabbitmq \
+        && mkdir build && cd build \
+        && cmake .. \
+        && cmake --build . --target install \
+        # workaround for linking issue
+        && cp -r /usr/local/lib64/* /usr/lib/ \
+    && git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.git /tmp/php-amqp \
+        && cd /tmp/php-amqp \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test \
+    && git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
+        && cd /tmp/phpredis \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test \
+    && git clone --branch ${PHP_ZEROMQ_VERSION} https://github.com/mkoppanen/php-zmq /tmp/php-zmq \
+        && cd /tmp/php-zmq \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test \
+    && git clone --branch ${PHP_MONGO_VERSION} https://github.com/mongodb/mongo-php-driver /tmp/php-mongo \
+        && cd /tmp/php-mongo \
+        && git submodule sync && git submodule update --init \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test \
+    && apk del .build-deps \
+    && rm -rf /tmp/* \
     && rm -rf /app \
     && mkdir /app
 
@@ -55,7 +102,10 @@ COPY config/php-cli.ini /usr/local/etc/php/php.ini
 COPY config/php7.ini /usr/local/etc/php/conf.d/
 COPY config/amqp.ini /usr/local/etc/php/conf.d/
 COPY config/zmq.ini /usr/local/etc/php/conf.d/
+COPY config/redis.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
+
+WORKDIR /app
 
 # Set up the application directory
 VOLUME ["/app"]

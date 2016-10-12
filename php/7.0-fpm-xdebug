@@ -1,7 +1,23 @@
 FROM prooph/php:7.0-fpm
 
-# XDEBUG
-RUN pecl install xdebug
+# persistent / runtime deps
+ENV PHPIZE_DEPS \
+    autoconf \
+    cmake \
+    file \
+    g++ \
+    gcc \
+    libc-dev \
+    make \
+    git \
+    pkgconf \
+    re2c
+
+RUN set -xe \
+    && apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+    && pecl install xdebug \
+    && apk del .build-deps
 
 # Copy custom configuration
 COPY config/xdebug.ini /usr/local/etc/php/conf.d/

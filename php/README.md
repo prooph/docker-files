@@ -1,4 +1,4 @@
-# PHP Docker files
+# PHP Docker files with Alpine Linux
 
 > These images are only for development environments
 
