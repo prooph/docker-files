@@ -1,4 +1,4 @@
-FROM prooph/php:7.0-fpm
+FROM prooph/php:7.1-fpm
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \

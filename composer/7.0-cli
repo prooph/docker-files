@@ -5,15 +5,13 @@ FROM prooph/php:7.0-cli
 ENV COMPOSER_HOME /root/composer
 ENV COMPOSER_VERSION master
 
-# Packages
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        libbz2-dev \
-        libzip-dev \
-        git \
-        unzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install zip bz2 \
+RUN apk add --no-cache --virtual .persistent-deps \
+    git \
+    unzip
+
+RUN set -xe \
+    && docker-php-ext-install \
+        zip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo
 

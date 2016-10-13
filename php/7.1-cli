@@ -1,6 +1,4 @@
-FROM php:7.0-fpm-alpine
-
-# this is a copy from 7.0-cli
+FROM php:7.1-alpine
 
 ENV ZEROMQ_VERSION 4.1.5
 ENV RABBITMQ_VERSION v0.8.0
@@ -96,21 +94,18 @@ RUN set -xe \
         && make test \
     && apk del .build-deps \
     && rm -rf /tmp/* \
-    && rm -rf /var/www \
-    && mkdir -p /var/www
-
-# Possible values for ext-name:
-# bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl
-# json ldap mbstring mcrypt mssql mysql mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_mysql pdo_oci
-# pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline recode reflection session shmop simplexml snmp soap
-# sockets spl standard sybase_ct sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlreader xmlrpc xmlwriter xsl zip
+    && rm -rf /app \
+    && mkdir /app
 
 # Copy configuration
-COPY config/php.ini /usr/local/etc/php/
+COPY config/php-cli.ini /usr/local/etc/php/php.ini
 COPY config/php7.ini /usr/local/etc/php/conf.d/
 COPY config/amqp.ini /usr/local/etc/php/conf.d/
 COPY config/zmq.ini /usr/local/etc/php/conf.d/
 COPY config/redis.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
-COPY config/fpm/php-fpm.conf /usr/local/etc/
-COPY config/fpm/pool.d /usr/local/etc/pool.d
+
+WORKDIR /app
+
+# Set up the application directory
+VOLUME ["/app"]

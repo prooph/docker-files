@@ -1,4 +1,4 @@
-FROM prooph/php:7.0-fpm
+FROM prooph/php:7.1-cli
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -20,4 +20,4 @@ RUN set -xe \
     && apk del .build-deps
 
 # Copy custom configuration
-COPY config/xdebug.ini /usr/local/etc/php/conf.d/
+COPY config/xdebug-cli.ini /usr/local/etc/php/conf.d/

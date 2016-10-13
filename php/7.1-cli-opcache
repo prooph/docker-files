@@ -1,4 +1,4 @@
-FROM prooph/php:7.0-fpm
+FROM prooph/php:7.1-cli
 
 RUN docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install opcache

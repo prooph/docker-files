@@ -1,4 +1,4 @@
-FROM prooph/php:7.0-cli
+FROM prooph/php:7.1-cli
 
 # blackfire
 RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
