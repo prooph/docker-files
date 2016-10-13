@@ -29,6 +29,9 @@ To run Composer use:
 $ docker run --rm -it --volume $(pwd):/app prooph/composer:7.0 [your composer command]
 ```
 
+## Composer with PHP 7.1
+Use the following image: `prooph/composer:7.1`.
+
 ## Composer with PHP 7.0
 Use the following image: `prooph/composer:7.0`.
 
