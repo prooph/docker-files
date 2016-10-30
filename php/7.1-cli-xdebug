@@ -1,5 +1,7 @@
 FROM prooph/php:7.1-cli
 
+ENV PHP_XDEBUG_VERSION master
+
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
     autoconf \
@@ -16,8 +18,15 @@ ENV PHPIZE_DEPS \
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
-    && pecl install xdebug \
-    && apk del .build-deps
+    && git clone --branch ${PHP_XDEBUG_VERSION} https://github.com/xdebug/xdebug /tmp/php-xdebug \
+        && cd /tmp/php-xdebug \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test \
+    && apk del .build-deps \
+    && rm -rf /tmp/*
 
 # Copy custom configuration
 COPY config/xdebug-cli.ini /usr/local/etc/php/conf.d/
