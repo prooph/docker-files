@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM docker:1.12
 
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
