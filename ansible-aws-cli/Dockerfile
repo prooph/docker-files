@@ -22,9 +22,9 @@ RUN apk add --no-cache --virtual .persistent-deps \
     curl \
     openssl \
     groff \
-    less
-    python && \
-    pip install --upgrade \
+    less \
+    python \
+    && pip install --upgrade \
         awscli \
         ansible \
         boto \
