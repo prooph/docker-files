@@ -23,5 +23,5 @@ $ docker run -it --rm -v ~/.aws:/root/.aws prooph/ansible-aws-cli aws help
 To login to the Amazon Container Registry (ECR) with your Amazon AWS credentials use:
 
 ```bash
-$ docker run -it --rm -v ~/.aws:/root/.aws -v /var/run/docker.sock:/var/run/docker.sock ansible-aws-cli aws ecr get-login --region eu-central-1 | tr -d '\r\n' | xargs xargs
+$ docker run -it --rm -v ~/.aws:/root/.aws -v /var/run/docker.sock:/var/run/docker.sock prooph/ansible-aws-cli aws ecr get-login --region eu-central-1 | tr -d '\r\n' | xargs xargs
 ```
