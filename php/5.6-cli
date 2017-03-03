@@ -28,7 +28,7 @@ RUN apt-get update \
     # prooph mongo db adapter uses deprecated ext currently
     && pecl install mongo \
     && pecl install amqp \
-    && pecl install memcached \
+    && pecl install memcached-2.2.0 \
     && pecl install redis-2.2.8 \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
