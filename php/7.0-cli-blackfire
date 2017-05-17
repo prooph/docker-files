@@ -1,79 +1,18 @@
-FROM php:7.0-cli
+FROM prooph/php:7.0-cli
 
-ENV ZEROMQ_VERSION 4.1.4
-
-WORKDIR /app
-
-RUN apt-get update \
-    && apt-get install -y \
-      # for intl extension
-      libicu-dev \
-      # for mcrypt extension
-      libmcrypt-dev \
-      # for mongodb
-      libssl-dev \
-      # for rabbit mq
-      librabbitmq-dev \
-      # for zero mq
-      libsodium-dev \
-      # for postgres
-      libpq-dev \
-      # for soap
-      libxml2 \
-      libxml2-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && pecl install mongodb \
-    && pecl install amqp-1.7.0alpha2 \
-    && docker-php-ext-configure bcmath --enable-bcmath \
-    && docker-php-ext-configure intl --enable-intl \
-    && docker-php-ext-configure pcntl --enable-pcntl \
-    && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
-    && docker-php-ext-configure pdo_pgsql --with-pgsql \
-    && docker-php-ext-configure mbstring --enable-mbstring \
-    && docker-php-ext-configure soap --enable-soap \
-    && docker-php-ext-install \
-        bcmath \
-        intl \
-        mcrypt \
-        pcntl \
-        pdo_mysql \
-        pdo_pgsql \
-        mbstring \
-        soap \
-    && curl -L http://download.zeromq.org/zeromq-${ZEROMQ_VERSION}.tar.gz | tar zx \
-    && cd zeromq-${ZEROMQ_VERSION} \
-    && ./configure \
-    && make \
-    && make install \
-    && ldconfig \
-    && pecl install zmq-1.1.3 \
-    && rm -rf /app \
-    && mkdir /app
-
-# Copy configuration
-COPY config/php-cli.ini /usr/local/etc/php/php.ini
-COPY config/php7.ini /usr/local/etc/php/conf.d/
-COPY config/amqp.ini /usr/local/etc/php/conf.d/
-COPY config/zmq.ini /usr/local/etc/php/conf.d/
-COPY config/mongodb.ini /usr/local/etc/php/conf.d/
-
-# Set up the application directory
-VOLUME ["/app"]
-
-# blackfire
-RUN export VERSION=`php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;"` \
-    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/amd64/${VERSION} \
-    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp \
-    && mv /tmp/blackfire-*.so `php -r "echo ini_get('extension_dir');"`/blackfire.so \
-    && printf "extension=blackfire.so\nblackfire.agent_socket=\${BLACKFIRE_PORT}" > $PHP_INI_DIR/conf.d/blackfire.ini \
-    && rm -rf /tmp/* \
-    # blackfire agent
-    && curl -o /bin/blackfire -L https://github.com/blackfireio/docker/raw/master/blackfire \
-    && curl -o /bin/blackfire-agent -L https://github.com/blackfireio/docker/raw/master/blackfire-agent \
-    && chmod +x /bin/blackfire \
-    && chmod +x /bin/blackfire-agent
-
-ADD config/blackfire/agent /etc/blackfire/agent
+# blackfire CLI (with bundled agent)
+RUN set -xeo pipefail \
+    && version=$(php -r "echo PHP_MAJOR_VERSION, PHP_MINOR_VERSION;") \
+    && curl -sSL -D - -A "Docker" -o /tmp/blackfire-probe.tar.gz https://blackfire.io/api/v1/releases/probe/php/alpine/amd64/${version} \
+    && curl -sSL -D - -A "Docker" -o /tmp/blackfire-client.tar.gz https://blackfire.io/api/v1/releases/client/linux_static/amd64 \
+    && for file in /tmp/blackfire-*.tar.gz; do tar zxfp "${file}" -C /tmp; done \
+    && for file in /tmp/blackfire-*.sha*; do echo "$(cat ${file})  ${file/.sha1/}"; done | sed 's/\.sha/.so/' | sha1sum -c - \
+    && chmod +x /tmp/blackfire-*.so /tmp/blackfire \
+    && mv /tmp/blackfire-*.so "$(php -r "echo ini_get('extension_dir');")/blackfire.so" \
+    && mv /tmp/blackfire /bin/blackfire \
+    && printf "extension=blackfire.so\n" > ${PHP_INI_DIR}/conf.d/blackfire.ini \
+    && rm -rf /tmp/blackfire* \
+    && php -m | grep "^blackfire$" > /dev/null
 
 CMD ["help"]
 ENTRYPOINT ["blackfire"]
