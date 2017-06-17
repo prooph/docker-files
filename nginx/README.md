@@ -14,3 +14,8 @@ Use the following image: `prooph/nginx:zray`.
 
 [Zend Z-Ray](http://www.zend.com/de/products/server/z-ray) is a PHP Profiler and is used together with
 one of the `prooph/php:[version]-fpm-zray` Docker images.
+
+## nginx for Symfony
+Use the following image: `prooph/nginx:symfony`.
+
+The Symfony edition of nginx is exactly equal to the www edition except is uses the /var/www/web folder as document root, as this is Symfony convention.
