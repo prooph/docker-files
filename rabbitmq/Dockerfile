@@ -16,5 +16,5 @@ ENV RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT ${RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT:-"fals
 # Without this erlang argument you will not be able to connect over TLS using the rabbitctl cli tool
 ENV RABBITMQ_CTL_ERL_ARGS ${RABBITMQ_CTL_ERL_ARGS:-"-proto_dist inet_tls"}
 
-# Set up the application directory
+# Copy self signed certificates
 COPY config/ssl/ /etc/rabbitmq/ssl
