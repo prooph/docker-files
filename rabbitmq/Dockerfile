@@ -17,7 +17,4 @@ ENV RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT ${RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT:-"fals
 ENV RABBITMQ_CTL_ERL_ARGS ${RABBITMQ_CTL_ERL_ARGS:-"-proto_dist inet_tls"}
 
 # Set up the application directory
-VOLUME ["/app"]
-
-# Set up the application directory
 COPY config/ssl/ /etc/rabbitmq/ssl
