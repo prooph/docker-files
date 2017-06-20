@@ -11,7 +11,6 @@ The [official](https://hub.docker.com/_/rabbitmq/) rabbitmq docker images, speci
 - Configures rabbitmq to use TLS with a self-signed localhost certificate. 
 - Enables the management plugin.
 - Sets a default `prooph` user with password `prooph`.
-- Mounts /app as application folder.
 
 ## What doesn't it do?
 
