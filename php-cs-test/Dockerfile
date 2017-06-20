@@ -1,10 +1,16 @@
-FROM composer
+FROM composer as deps
 
-RUN composer global require prooph/php-cs-fixer-config
+WORKDIR /tmp/php-cs-fixer
 
+RUN composer require prooph/php-cs-fixer-config
+
+FROM prooph/php:7.1-cli
+
+COPY --from=deps /tmp/php-cs-fixer/vendor /usr/local/src/php-cs-fixer
 COPY rules.php /rules.php
 
-VOLUME /sut
-WORKDIR /sut
+VOLUME /app
+WORKDIR /app
 
-ENTRYPOINT ["/composer/vendor/bin/php-cs-fixer", "fix", "--dry-run", "--diff", "--config=/rules.php"]
+CMD ["fix", "--dry-run", "--diff"]
+ENTRYPOINT ["/usr/local/src/php-cs-fixer/bin/php-cs-fixer", "--config=/rules.php"]
