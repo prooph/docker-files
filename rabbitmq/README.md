@@ -2,7 +2,7 @@
 
 > These images are only for development environments
 
-## Build upon
+## Built upon
 
 The [official](https://hub.docker.com/_/rabbitmq/) rabbitmq docker images, specifically alpine with the management plugin enabled.
 
