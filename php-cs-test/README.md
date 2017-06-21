@@ -4,8 +4,8 @@ The aim of this container image is to eliminate the need to `php-cs-fixer` in th
 
 # Usage
 
-Mount code to `/sut` on the container and we will test again prooph's rules.
+Mount code to `/app` on the container and we will test again prooph's rules.
 
 ```
-$ docker run --rm -v $(pwd):/sut prooph/php-cs-test
+$ docker run --rm -v $(pwd):/app prooph/php-cs-test
 ```
