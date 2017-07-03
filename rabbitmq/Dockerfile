@@ -20,11 +20,15 @@ ENV RABBITMQ_CTL_ERL_ARGS ${RABBITMQ_CTL_ERL_ARGS:-"-proto_dist inet_tls"}
 # Copy self signed certificates
 COPY config/ssl/ /etc/rabbitmq/ssl
 
+# Add custom plugins
 COPY config/etc/enabled_plugins /etc/rabbitmq/enabled_plugins
+
+# Insert custom configuration
 COPY config/etc/rabbitmq-prooph.config /etc/rabbitmq/
 RUN chown rabbitmq /etc/rabbitmq/rabbitmq-prooph.config && \
     chgrp rabbitmq /etc/rabbitmq/rabbitmq-prooph.config
 
+# Insert a wrapper script
 COPY config/wrapper-entrypoint.sh /
 
 ENTRYPOINT ["/wrapper-entrypoint.sh"]
