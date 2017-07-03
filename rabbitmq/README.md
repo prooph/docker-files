@@ -40,3 +40,12 @@ docker run -d --hostname my-rabbit --name rabbitmq -p 8080:15671 -p 15691:15691 
 ```
 
 You'll need to connect to port 15691.
+
+
+## Testing
+
+To test the server with some standard examples from RabbitMQ spin up a webserver and navigate to [https://localhost:8080](https://localhost:8000)
+
+```
+php -S localhost:8000 -t rabbitmq/test 
+```
