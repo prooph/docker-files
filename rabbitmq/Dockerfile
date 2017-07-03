@@ -12,9 +12,20 @@ ENV RABBITMQ_SSL_CERTFILE ${RABBITMQ_SSL_CERTFILE:-"/etc/rabbitmq/ssl/localhost.
 ENV RABBITMQ_SSL_KEYFILE ${RABBITMQ_SSL_KEYFILE:-"/etc/rabbitmq/ssl/localhost.key"}
 ENV RABBITMQ_SSL_VERIFY ${RABBITMQ_SSL_VERIFY:-"verify_none"}
 ENV RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT ${RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT:-"false"}
-
+#ENV RABBITMQ_CONF_ENV_FILE ${RABBITMQ_CONF_ENV_FILE:-"/etc/rabbitmq/rabbitmq-prooph.config"}
 # Without this erlang argument you will not be able to connect over TLS using the rabbitctl cli tool
 ENV RABBITMQ_CTL_ERL_ARGS ${RABBITMQ_CTL_ERL_ARGS:-"-proto_dist inet_tls"}
 
 # Copy self signed certificates
 COPY config/ssl/ /etc/rabbitmq/ssl
+
+COPY config/etc/enabled_plugins /etc/rabbitmq/enabled_plugins
+COPY config/etc/rabbitmq-prooph.config /etc/rabbitmq/
+RUN chown rabbitmq /etc/rabbitmq/rabbitmq-prooph.config && \
+    chgrp rabbitmq /etc/rabbitmq/rabbitmq-prooph.config
+
+COPY config/wrapper-entrypoint.sh /
+
+ENTRYPOINT ["/wrapper-entrypoint.sh"]
+
+

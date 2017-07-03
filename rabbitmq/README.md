@@ -10,7 +10,9 @@ The [official](https://hub.docker.com/_/rabbitmq/) rabbitmq docker images, speci
 
 - Configures rabbitmq to use TLS with a self-signed localhost certificate. 
 - Enables the management plugin.
-- Sets a default `prooph` user with password `prooph`.
+- Sets a default adminstrator `prooph` user with password `prooph`.
+- Enables the webstomp plugin.
+- Adds a vhost `proophessor-do`, a user `proophessor-do` with password `proophessor-do` and configures it's permissions.
 
 ## What doesn't it do?
 
@@ -27,4 +29,14 @@ Use the following image: `prooph/rabbitmq`.
 docker run -d --hostname my-rabbit --name rabbitmq -p 8080:15671 prooph/rabbitmq
 ```
 
-Then navigate to [https://localhost:8080](https://localhost:8080) to login with user prooph and prooph as password.
+Then navigate to [https://localhost:8080](https://localhost:8080) to login with user `prooph` and `prooph` as password.
+
+## Websockets
+
+We've enabled the webstomp plugin.
+
+```
+docker run -d --hostname my-rabbit --name rabbitmq -p 8080:15671 -p 15691:15691 prooph/rabbitmq
+```
+
+You'll need to connect to port 15691.
