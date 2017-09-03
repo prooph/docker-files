@@ -10,7 +10,8 @@ set -e
 
     rabbitmqctl add_vhost "proophessor-do" && \
     rabbitmqctl add_user "proophessor-do" "proophessor-do" && \
-    rabbitmqctl set_permissions -p "proophessor-do" "proophessor-do"  ".*" ".*" ".*"
+    rabbitmqctl set_permissions -p "proophessor-do" "proophessor-do"  ".*" ".*" ".*" && \
+    rabbitmqctl set_permissions -p "proophessor-do" "prooph"  ".*" ".*" ".*"
 ) &
 
 # original entrypoint
