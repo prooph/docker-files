@@ -1,0 +1,79 @@
+{
+  "rabbit_version": "3.6.11",
+  "users": [
+    {
+      "name": "prooph",
+      "password_hash": "SxKhlLCGTegGcVTMyfQqJZAHJArM9wQi/CcPExWFbmax0f9V",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    },
+    {
+      "name": "proophessor-do",
+      "password_hash": "gq1QlhqhsHrZwNKOFg5+i/rG84bpZp0GhlTRa13VXZBuCADz",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": ""
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    },
+    {
+      "name": "proophessor-do"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "prooph",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "proophessor-do",
+      "vhost": "proophessor-do",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [],
+  "global_parameters": [
+    {
+      "name": "cluster_name",
+      "value": "prooph@ce28ff581fbc"
+    }
+  ],
+  "policies": [],
+  "queues": [
+    {
+      "name": "ui-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "ui-exchange",
+      "vhost": "/",
+      "type": "fanout",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "ui-exchange",
+      "vhost": "/",
+      "destination": "ui-queue",
+      "destination_type": "queue",
+      "routing_key": "#",
+      "arguments": {}
+    }
+  ]
+}

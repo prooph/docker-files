@@ -57,5 +57,5 @@ the management UI (see Get started section). Configure your exchanges etc. and t
 Let docker mount the file into the container:
 
 ```
-docker run -d --hostname my-rabbit --name rabbitmq -p 8080:15671 -v my_config.json:/opt/definitions.json prooph/rabbitmq
+docker run -d --hostname my-rabbit --name rabbitmq -p 8080:15671 -v /my_config.json:/opt/definitions.json:ro prooph/rabbitmq
 ```
