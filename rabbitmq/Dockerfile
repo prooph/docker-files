@@ -28,9 +28,6 @@ COPY config/etc/rabbitmq-prooph.config /etc/rabbitmq/
 RUN chown rabbitmq /etc/rabbitmq/rabbitmq-prooph.config && \
     chgrp rabbitmq /etc/rabbitmq/rabbitmq-prooph.config
 
-# Insert a wrapper script
-COPY config/wrapper-entrypoint.sh /
-
-ENTRYPOINT ["/wrapper-entrypoint.sh"]
-
+# Add mgmt definitions
+COPY config/opt/definitions.json /opt/definitions.json
 
