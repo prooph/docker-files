@@ -49,3 +49,13 @@ To test the server with some standard examples from RabbitMQ spin up a webserver
 ```
 php -S localhost:8000 -t rabbitmq/test 
 ```
+
+## Configuration
+
+Mount your own configuration to `/opt/definitions.json`. The easiest way to create a configuration file is by using
+the management UI (see Get started section). Configure your exchanges etc. and then simply export the configuration file (overview tab).
+Let docker mount the file into the container:
+
+```
+docker run -d --hostname my-rabbit --name rabbitmq -p 8080:15671 -v /my_config.json:/opt/definitions.json:ro prooph/rabbitmq
+```
