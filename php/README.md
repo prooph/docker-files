@@ -22,7 +22,7 @@ Extends the official PHP image with the following PHP extensions:
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 
-> Each image has tags for PHP 5.6 / 7.0 and 7.1
+> Each image has tags for PHP 5.6 / 7.0 / 7.1 and 7.2
 
 ## cli
 Use the following image: `prooph/php:7.0-cli`.
