@@ -42,7 +42,6 @@ RUN set -xe \
         $PHPIZE_DEPS \
         openssl-dev \
         zeromq-dev \
-    && pecl install pthreads \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \

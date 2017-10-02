@@ -1,10 +1,11 @@
-FROM php:7.0-zts-alpine
+FROM php:7.2-rc-zts-alpine
 
 ENV RABBITMQ_VERSION v0.8.0
 ENV PHP_AMQP_VERSION v1.9.0
 ENV PHP_REDIS_VERSION 3.1.2
 ENV PHP_ZEROMQ_VERSION master
 ENV PHP_MONGO_VERSION 1.3.0
+ENV PHP_PTHREADS_VERSION master
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -25,10 +26,7 @@ ENV PHPIZE_DEPS \
 RUN apk add --no-cache --virtual .persistent-deps \
     # for intl extension
     icu-dev \
-    # for mcrypt extension
-    libmcrypt-dev \
     # for mongodb
-    libssl1.0 \
     # for zero mq
     libsodium-dev \
     # for postgres
@@ -40,7 +38,6 @@ RUN apk add --no-cache --virtual .persistent-deps \
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
-        openssl-dev \
         zeromq-dev \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
@@ -52,12 +49,18 @@ RUN set -xe \
     && docker-php-ext-install \
         bcmath \
         intl \
-        mcrypt \
         pcntl \
         pdo_mysql \
         pdo_pgsql \
         mbstring \
         soap \
+    && git clone --branch ${PHP_PTHREADS_VERSION} https://github.com/krakjoe/pthreads.git /tmp/php-pthreads \
+         && cd /tmp/php-pthreads \
+         && phpize  \
+         && ./configure  \
+         && make  \
+         && make install \
+         && make test \
     && git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
         && cd /tmp/rabbitmq \
         && mkdir build && cd build \
@@ -106,6 +109,7 @@ COPY config/amqp.ini /usr/local/etc/php/conf.d/
 COPY config/zmq.ini /usr/local/etc/php/conf.d/
 COPY config/redis.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
+COPY config/pthreads.ini /usr/local/etc/php/conf.d/
 
 WORKDIR /app
 

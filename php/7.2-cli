@@ -18,13 +18,14 @@ ENV PHPIZE_DEPS \
     make \
     git \
     pkgconf \
-    re2c
+    re2c \
+    # workaround for https://github.com/mongodb/mongo-php-driver/issues/655
+    bash
 
 RUN apk add --no-cache --virtual .persistent-deps \
     # for intl extension
     icu-dev \
     # for mongodb
-    libssl1.0 \
     # for zero mq
     libsodium-dev \
     # for postgres
@@ -36,7 +37,6 @@ RUN apk add --no-cache --virtual .persistent-deps \
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
-        openssl-dev \
         zeromq-dev \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
