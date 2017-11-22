@@ -1,5 +1,7 @@
 FROM prooph/php:5.6-cli
 
+ENV XDEBUG_HOST=172.17.0.1
+
 # XDEBUG
 RUN pecl install xdebug
 

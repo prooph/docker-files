@@ -47,6 +47,12 @@ Run the following command with the path to your php file.
 $ docker run --rm -it --volume $(pwd):/app -e PHP_IDE_CONFIG="serverName=application" prooph/php:7.0-cli-xdebug php [your file]
 ```
 
+Mac users doesn't have `docker0` network. According to [networking features](https://docs.docker.com/docker-for-mac/networking/#known-limitations-use-cases-and-workarounds) they should change hostname.
+
+```bash
+$ docker run --rm -it --volume $(pwd):/app -e PHP_IDE_CONFIG="serverName=application" -e XDEBUG_HOST="docker.for.mac.localhost" prooph/php:7.0-cli-xdebug php [your file]
+```
+
 ## cli with SensioLabs Blackfire
 Use the following image: `prooph/php:7.0-cli-blackfire`.
 
@@ -80,7 +86,7 @@ Use the following image: `prooph/php:7.0-fpm-blackfire`.
 
 [SensioLabs Blackfire](https://blackfire.io/) is a PHP Profiler.
 
-Please refer to the [docs](https://blackfire.io/docs/integrations/docker)to analyze your application. 
+Please refer to the [docs](https://blackfire.io/docs/integrations/docker)to analyze your application.
 You need the Blackfire Agent Docke image.
 
 ## fpm with Zend Z-Ray (only PHP 5.6)
@@ -93,5 +99,3 @@ Unfortunately the input fields are hidden (display:none). Open the browsers *dev
 Firebug and remove the `display:none` styles of the `devbar-settings` form.
 
 Then you have to restart the Docker containers.
-
-
