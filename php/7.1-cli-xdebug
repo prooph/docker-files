@@ -1,6 +1,7 @@
 FROM prooph/php:7.1-cli
 
 ENV PHP_XDEBUG_VERSION master
+ENV XDEBUG_HOST=172.17.0.1
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \

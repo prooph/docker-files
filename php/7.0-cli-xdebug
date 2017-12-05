@@ -1,5 +1,7 @@
 FROM prooph/php:7.0-cli
 
+ENV XDEBUG_HOST=172.17.0.1
+
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
     autoconf \
