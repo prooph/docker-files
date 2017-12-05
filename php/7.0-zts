@@ -18,9 +18,7 @@ ENV PHPIZE_DEPS \
     make \
     git \
     pkgconf \
-    re2c \
-    # workaround for https://github.com/mongodb/mongo-php-driver/issues/655
-    bash
+    re2c
 
 RUN apk add --no-cache --virtual .persistent-deps \
     # for intl extension
