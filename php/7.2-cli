@@ -1,4 +1,4 @@
-FROM php:7.2-alpine
+FROM php:7.2-cli-alpine
 
 ENV RABBITMQ_VERSION v0.8.0
 ENV PHP_AMQP_VERSION v1.9.3
