@@ -24,6 +24,8 @@ See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an
 
 > Each image has tags for PHP 5.6 / 7.0 / 7.1 and 7.2
 
+There are also PHP ZTS versions.
+
 ## cli
 Use the following image: `prooph/php:7.0-cli`.
 
