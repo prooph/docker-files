@@ -68,3 +68,8 @@ COPY config/memcached.ini /usr/local/etc/php/conf.d/
 
 # Set up the application directory
 VOLUME ["/app"]
+WORKDIR /app
+
+# Set up the command arguments
+CMD ["-"]
+ENTRYPOINT ["php"]

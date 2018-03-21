@@ -105,7 +105,10 @@ COPY config/zmq.ini /usr/local/etc/php/conf.d/
 COPY config/redis.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
 
-WORKDIR /app
-
 # Set up the application directory
 VOLUME ["/app"]
+WORKDIR /app
+
+# Set up the command arguments
+CMD ["-"]
+ENTRYPOINT ["php"]
