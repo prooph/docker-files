@@ -11,13 +11,13 @@ dockerfiles:
 
 docker-build:
 	for i in $(filter %.m4,$(LIST)); do \
-		docker build -q -t prooph/composer:`echo $${i##*/} | sed "s/-cli.m4//"` -f `echo $${i##*/} | sed "s/.m4//"` . ;\
+		docker build -q -t prooph/composer:`echo $${i##*/} | sed "s/.m4//" | sed "s/-cli//"` -f `echo $${i##*/} | sed "s/.m4//"` . ;\
 	done
 
 docker-build-one:
-	docker build -t prooph/composer:`echo $${image##*/} | sed "s/-cli.m4//"` -f `echo $${image##*/} | sed "s/.m4//"` . ;\
+	docker build -t prooph/composer:`echo $${image##*/} | sed "s/.m4//" | sed "s/-cli//` -f `echo $${image##*/} | sed "s/.m4//"` . ;\
 
 docker-push:
 	for i in $(filter %.m4,$(LIST)); do \
-		docker push prooph/composer:`echo $${i##*/} | sed "s/-cli.m4//"` ;\
+		docker push prooph/composer:`echo $${i##*/} | sed "s/.m4//" | sed "s/-cli//"` ;\
 	done
