@@ -1,7 +1,0 @@
-FROM prooph/php:5.6-fpm
-
-# XDEBUG
-RUN pecl install xdebug
-
-# Copy custom configuration
-COPY config/xdebug.ini /usr/local/etc/php/conf.d/

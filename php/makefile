@@ -1,0 +1,30 @@
+CPUS:=$(shell grep -c ^processor /proc/cpuinfo)
+MAKEFLAGS += --jobs=$(CPUS)
+
+LIST:=  $(wildcard m4/*.m4)
+dir:=./
+
+dockerfiles:
+	for i in $(LIST); do \
+		m4 -I $(dir)/inc $(dir)"$$i" | awk 'NF' > `echo $${i##*/} | sed "s/.m4//"` ; \
+	done
+
+docker-build:
+	docker pull php:7.0-cli-alpine3.7
+	docker pull php:7.1-cli-alpine3.7
+	docker pull php:7.2-cli-alpine3.7
+
+	for i in $(filter %.m4,$(LIST)); do \
+		docker build -q -t prooph/php:`echo $${i##*/} | sed "s/.m4//"` -f `echo $${i##*/} | sed "s/.m4//"` . ;\
+	done
+
+docker-build-one:
+	docker pull php:7.0-cli-alpine3.7
+	docker pull php:7.1-cli-alpine3.7
+	docker pull php:7.2-cli-alpine3.7
+	docker build -t prooph/php:`echo $${image##*/} | sed "s/.m4//"` -f `echo $${image##*/} | sed "s/.m4//"` . ;\
+
+docker-push:
+	for i in $(filter %.m4,$(LIST)); do \
+		docker push prooph/php:`echo $${i##*/} | sed "s/.m4//"` ;\
+	done

@@ -8,15 +8,11 @@ Extends the official PHP image with the following PHP extensions and installs Co
 * intl 
 * pdo_mysql
 * bcmath
-* mcrypt
 * mbstring
-* mongo
 * mongodb
 * pcntl
 * amqp
-* zmq
 * redis
-* memcached
 * zip
 * bz2
 
@@ -46,6 +42,3 @@ Use the following image: `prooph/composer:7.1-zts`.
 
 ## Composer with PHP ZTS 7.0
 Use the following image: `prooph/composer:7.0-zts`.
-
-## Composer with PHP 5.6
-Use the following image: `prooph/composer:5.6`.
