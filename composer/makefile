@@ -12,6 +12,7 @@ dockerfiles:
 docker-build:
 	for i in $(filter %.m4,$(LIST)); do \
 		docker build -q -t prooph/composer:`echo $${i##*/} | sed "s/.m4//" | sed "s/-cli//"` -f `echo $${i##*/} | sed "s/.m4//"` . ;\
+		echo "finished: $${i##*/}" ;\
 	done
 
 docker-build-one:

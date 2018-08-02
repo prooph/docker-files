@@ -1,8 +1,9 @@
 CPUS:=$(shell grep -c ^processor /proc/cpuinfo)
 MAKEFLAGS += --jobs=$(CPUS)
 
-LIST:=  $(wildcard m4/*.m4)
+LIST:=  $(sort $(wildcard m4/*.m4))
 dir:=./
+EXCLUDE_LIST:= %-xdebug.m4 %-opcache.m4 %-blackfire.m4
 
 dockerfiles:
 	for i in $(LIST); do \
@@ -10,12 +11,13 @@ dockerfiles:
 	done
 
 docker-build:
-	docker pull php:7.0-cli-alpine3.7
-	docker pull php:7.1-cli-alpine3.7
-	docker pull php:7.2-cli-alpine3.7
-
-	for i in $(filter %.m4,$(LIST)); do \
+	for i in $(filter-out $(EXCLUDE_LIST), $(LIST)); do \
 		docker build -q -t prooph/php:`echo $${i##*/} | sed "s/.m4//"` -f `echo $${i##*/} | sed "s/.m4//"` . ;\
+		echo "finished: $${i##*/}" ;\
+	done
+	for i in $(filter $(EXCLUDE_LIST), $(LIST)); do \
+		docker build -q -t prooph/php:`echo $${i##*/} | sed "s/.m4//"` -f `echo $${i##*/} | sed "s/.m4//"` . ;\
+		echo "finished: $${i##*/}" ;\
 	done
 
 docker-build-one:
