@@ -16,7 +16,11 @@ ENV PHPIZE_DEPS \
     make \
     git \
     pkgconf \
-    re2c
+    re2c \
+    # for GD
+    freetype-dev \
+    libpng-dev  \
+    libjpeg-turbo-dev
 
 RUN apk add --no-cache --virtual .persistent-deps \
     # for intl extension
@@ -26,13 +30,22 @@ RUN apk add --no-cache --virtual .persistent-deps \
     # for soap
     libxml2-dev \
     # for amqp
-    libressl-dev
+    libressl-dev \
+    # for GD
+    freetype \
+    libpng \
+    libjpeg-turbo
 
 RUN set -xe \
     # workaround for rabbitmq linking issue
     && ln -s /usr/lib /usr/local/lib64 \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
+    && docker-php-ext-configure gd \
+        --with-gd \
+        --with-freetype-dir=/usr/include/ \
+        --with-png-dir=/usr/include/ \
+        --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
@@ -40,7 +53,8 @@ RUN set -xe \
     && docker-php-ext-configure pdo_pgsql --with-pgsql \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure soap --enable-soap \
-    && docker-php-ext-install \
+    && docker-php-ext-install -j$(nproc) \
+        gd \
         bcmath \
         intl \
         pcntl \
@@ -48,6 +62,7 @@ RUN set -xe \
         pdo_pgsql \
         mbstring \
         soap \
+        iconv \
     && git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
         && cd /tmp/rabbitmq \
         && mkdir build && cd build \
