@@ -6,8 +6,53 @@ Configures nginx with SSL and HTTP/2 and some optimizations. The *vhost* uses th
 mount your application to `/var/www/`. See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an
 example.
 
+## nginx swoole
+Use the following image: `prooph/nginx:swoole`.
+
+A Docker Compose example to run your [Zend Expressive](https://docs.zendframework.com/zend-expressive-swoole/intro/#swoole-with-expressive) application with [swoole](https://www.swoole.co.uk/).
+
+```
+version: '2'
+services:
+  nginx:
+    image: prooph/nginx:swoole
+    ports:
+    - 80:80
+    - 443:443
+    volumes:
+    - .:/var/www
+
+  php:
+    image: prooph/php:7.2-cli
+    volumes:
+    - .:/var/www
+    command:
+      php
+      /var/www/public/index.php
+      start
+```
+
 ## nginx www
 Use the following image: `prooph/nginx:www`.
+
+A Docker Compose example:
+
+```
+version: '2'
+services:
+  nginx:
+    image: prooph/nginx:www
+    ports:
+    - 80:80
+    - 443:443
+    volumes:
+    - .:/var/www
+
+  php:
+    image: prooph/php:7.2-fpm
+    volumes:
+    - .:/var/www
+```
 
 ## nginx with Zend Z-Ray
 Use the following image: `prooph/nginx:zray`.
