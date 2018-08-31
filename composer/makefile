@@ -16,7 +16,7 @@ docker-build:
 	done
 
 docker-build-one:
-	docker build -t prooph/composer:`echo $${image##*/} | sed "s/.m4//" | sed "s/-cli//` -f `echo $${image##*/} | sed "s/.m4//"` . ;\
+	docker build -t prooph/composer:`echo $${image##*/} | sed "s/.m4//" | sed "s/-cli//"` -f `echo $${image##*/} | sed "s/.m4//"` . ;\
 
 docker-push:
 	for i in $(filter %.m4,$(LIST)); do \

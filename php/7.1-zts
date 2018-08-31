@@ -48,6 +48,7 @@ RUN set -xe \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
+    && docker-php-ext-configure mysqli --with-mysqli \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
     && docker-php-ext-configure pdo_pgsql --with-pgsql \
     && docker-php-ext-configure mbstring --enable-mbstring \
@@ -57,6 +58,7 @@ RUN set -xe \
         bcmath \
         intl \
         pcntl \
+        mysqli \
         pdo_mysql \
         pdo_pgsql \
         mbstring \
@@ -126,5 +128,25 @@ RUN set -xe \
     && rm -rf /tmp/*
 COPY config/pthreads.ini /usr/local/etc/php/conf.d/
 COPY config/php-cli.ini /usr/local/etc/php/php.ini
+# persistent / runtime deps
+ENV PHPIZE_DEPS \
+    autoconf \
+    cmake \
+    file \
+    g++ \
+    gcc \
+    libc-dev \
+    pcre-dev \
+    make \
+    git \
+    pkgconf \
+    re2c
+RUN set -xe \
+    && apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+    && pecl install swoole \
+    && apk del .build-deps \
+    && rm -rf /tmp/*
+COPY config/swoole.ini /usr/local/etc/php/conf.d/
 VOLUME ["/app"]
 WORKDIR /app

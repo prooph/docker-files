@@ -6,16 +6,17 @@ These images are available on [Docker Hub](https://hub.docker.com/r/prooph/php/)
 Extends the official PHP image with the following PHP extensions:
 
 * intl
+* mysqli
 * pdo_mysql
 * pdo_pgsql
 * bcmath
 * mbstring
-* mongo
 * mongodb
 * pcntl
 * amqp
 * redis
 * soap
+* swoole
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 
