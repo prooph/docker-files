@@ -3,6 +3,7 @@ ENV RABBITMQ_VERSION v0.8.0
 ENV PHP_AMQP_VERSION v1.9.3
 ENV PHP_REDIS_VERSION 4.1.0
 ENV PHP_MONGO_VERSION 1.5.2
+ENV PHP_PROTOBUF_VERSION v0.12.3
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -91,6 +92,13 @@ RUN set -xe \
         && make  \
         && make install \
         && make test \
+    && git clone --branch ${PHP_PROTOBUF_VERSION} https://github.com/allegro/php-protobuf /tmp/phpprotobuf \
+        && cd /tmp/phpprotobuf \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test \
     && apk del .build-deps \
     && rm -rf /tmp/* \
     && rm -rf /app \
@@ -101,3 +109,4 @@ COPY config/php7.ini /usr/local/etc/php/conf.d/
 COPY config/amqp.ini /usr/local/etc/php/conf.d/
 COPY config/redis.ini /usr/local/etc/php/conf.d/
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
+COPY config/protobuf.ini /usr/local/etc/php/conf.d/
