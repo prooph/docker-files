@@ -16,11 +16,12 @@ Extends the official PHP image with the following PHP extensions:
 * amqp
 * redis
 * soap
-* swoole
+* protobuf (PHP 7.2 only)
+* swoole (cli only)
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 
-> Each image has tags for 7.2, 7.1 and 7.2
+> Each image has tags for 7.0, 7.1 and 7.2
 
 There are also PHP ZTS versions.
 
@@ -87,4 +88,4 @@ Use the following image: `prooph/php:7.2-fpm-blackfire`.
 [SensioLabs Blackfire](https://blackfire.io/) is a PHP Profiler.
 
 Please refer to the [docs](https://blackfire.io/docs/integrations/docker)to analyze your application.
-You need the Blackfire Agent Docke image.
+You need the Blackfire Agent Docker image.
