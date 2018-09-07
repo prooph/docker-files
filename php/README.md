@@ -16,7 +16,7 @@ Extends the official PHP image with the following PHP extensions:
 * amqp
 * redis
 * soap
-* protobuf (PHP 7.2 only)
+* protobuf
 * swoole (cli only)
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
