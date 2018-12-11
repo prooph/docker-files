@@ -75,6 +75,8 @@ RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.
         && ./configure  \
         && make  \
         && make install
+# Copy configuration
+COPY config/amqp.ini /usr/local/etc/php/conf.d/
 ENV PHP_MONGO_VERSION 1.5.3
 RUN git clone --branch ${PHP_MONGO_VERSION} https://github.com/mongodb/mongo-php-driver /tmp/php-mongo \
         && cd /tmp/php-mongo \
@@ -85,7 +87,7 @@ RUN git clone --branch ${PHP_MONGO_VERSION} https://github.com/mongodb/mongo-php
         && make install \
         && make test
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
-ENV PHP_REDIS_VERSION 4.1.1
+ENV PHP_REDIS_VERSION 4.2.0
 RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
         && cd /tmp/phpredis \
         && phpize  \
