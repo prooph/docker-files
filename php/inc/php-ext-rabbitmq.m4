@@ -1,4 +1,4 @@
-ENV RABBITMQ_VERSION v0.8.0
+ENV RABBITMQ_VERSION v0.9.0
 
 RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
         && cd /tmp/rabbitmq \
@@ -15,3 +15,6 @@ RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.
         && ./configure  \
         && make  \
         && make install
+
+# Copy configuration
+COPY config/amqp.ini /usr/local/etc/php/conf.d/
