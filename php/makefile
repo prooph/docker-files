@@ -28,6 +28,18 @@ docker-push:
 		docker push prooph/php:`echo $${i##*/} | sed "s/.m4//"` ;\
 	done
 
+command-list:
+	> commands.txt
+	for i in $(filter-out $(EXCLUDE_LIST), $(LIST)); do \
+		echo "docker build --squash -q -t prooph/php:`echo $${i##*/} | sed "s/.m4//"` -f `echo $${i##*/} | sed "s/.m4//"` . " >> commands.txt ;\
+	done
+	for i in $(filter $(EXCLUDE_LIST), $(LIST)); do \
+		echo "docker build --squash -q -t prooph/php:`echo $${i##*/} | sed "s/.m4//"` -f `echo $${i##*/} | sed "s/.m4//"` ."  >> commands.txt ;\
+	done
+
+parallel-build:
+	parallel --jobs 24 < commands.txt
+
 docker-pull:
 	docker pull php:7.0-cli-alpine3.7
 	docker pull php:7.1-cli-alpine3.8
