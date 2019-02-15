@@ -8,6 +8,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN set -xe \
     && apk add --no-cache --virtual .persistent-deps \
         zlib-dev \
+        libzip-dev \
         git \
         unzip \
     && docker-php-ext-install \
