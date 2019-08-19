@@ -1,4 +1,4 @@
-FROM nginx:1.15.2-alpine
+FROM nginx:1.17-alpine
 
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
