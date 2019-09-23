@@ -87,5 +87,5 @@ Use the following image: `prooph/php:7.2-fpm-blackfire`.
 
 [SensioLabs Blackfire](https://blackfire.io/) is a PHP Profiler.
 
-Please refer to the [docs](https://blackfire.io/docs/integrations/docker)to analyze your application.
+Please refer to the [docs](https://blackfire.io/docs/integrations/docker) to analyze your application.
 You need the Blackfire Agent Docker image.
