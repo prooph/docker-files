@@ -1,6 +1,6 @@
 include(`macros.m4')
 DONT_CHANGE()
-FROM php:7.3-fpm-alpine3.8
+FROM php:7.3-fpm-alpine3.10
 
 include(`php-ext.m4')
 include(`php-ext-mongodb.m4')

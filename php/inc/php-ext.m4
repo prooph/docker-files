@@ -14,11 +14,18 @@ ENV PHPIZE_DEPS \
     # for GD
     freetype-dev \
     libpng-dev  \
-    libjpeg-turbo-dev
+    libjpeg-turbo-dev \
+    # for xslt
+    libxslt-dev \
+    # for intl extension
+    icu-dev \
+    openssl-dev
 
 RUN apk add --no-cache --virtual .persistent-deps \
     # for intl extension
-    icu-dev \
+    icu-libs \
+    # for mongodb
+    libssl1.1 \
     # for postgres
     postgresql-dev \
     # for soap
@@ -28,7 +35,8 @@ RUN apk add --no-cache --virtual .persistent-deps \
     # for GD
     freetype \
     libpng \
-    libjpeg-turbo
+    libjpeg-turbo \
+    libxslt
 
 RUN set -xe \
     # workaround for rabbitmq linking issue
@@ -58,7 +66,8 @@ RUN set -xe \
         pdo_pgsql \
         mbstring \
         soap \
-        iconv
+        iconv \
+        xsl
 
 # Copy configuration
 COPY config/php7.ini /usr/local/etc/php/conf.d/
