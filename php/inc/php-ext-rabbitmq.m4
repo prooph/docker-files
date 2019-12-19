@@ -1,4 +1,4 @@
-ENV RABBITMQ_VERSION v0.9.0
+ENV RABBITMQ_VERSION v0.10.0
 
 RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
         && cd /tmp/rabbitmq \
@@ -7,7 +7,7 @@ RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.
         && cmake --build . --target install
 
 
-ENV PHP_AMQP_VERSION v1.9.3
+ENV PHP_AMQP_VERSION v1.9.4
 
 RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.git /tmp/php-amqp \
         && cd /tmp/php-amqp \

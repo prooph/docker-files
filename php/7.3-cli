@@ -54,7 +54,7 @@ RUN set -xe \
     && docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-configure mysqli --with-mysqli \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
-    && docker-php-ext-configure pdo_pgsql --with-pgsql \
+    && docker-php-ext-configure pdo_pgsql --with-pdo-pgsql \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-install -j$(nproc) \
@@ -71,7 +71,7 @@ RUN set -xe \
         xsl
 # Copy configuration
 COPY config/php7.ini /usr/local/etc/php/conf.d/
-ENV PHP_MONGO_VERSION 1.6.0
+ENV PHP_MONGO_VERSION 1.6.1
 RUN git clone --branch ${PHP_MONGO_VERSION} https://github.com/mongodb/mongo-php-driver /tmp/php-mongo \
         && cd /tmp/php-mongo \
         && git submodule sync && git submodule update --init \
@@ -81,7 +81,7 @@ RUN git clone --branch ${PHP_MONGO_VERSION} https://github.com/mongodb/mongo-php
         && make install \
         && make test
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
-ENV PHP_REDIS_VERSION 5.0.2
+ENV PHP_REDIS_VERSION 5.1.1
 RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
         && cd /tmp/phpredis \
         && phpize  \

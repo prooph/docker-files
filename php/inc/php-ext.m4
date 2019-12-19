@@ -53,7 +53,7 @@ RUN set -xe \
     && docker-php-ext-configure pcntl --enable-pcntl \
     && docker-php-ext-configure mysqli --with-mysqli \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql \
-    && docker-php-ext-configure pdo_pgsql --with-pgsql \
+    && docker-php-ext-configure pdo_pgsql --with-pdo-pgsql \
     && docker-php-ext-configure mbstring --enable-mbstring \
     && docker-php-ext-configure soap --enable-soap \
     && docker-php-ext-install -j$(nproc) \

@@ -71,13 +71,13 @@ RUN set -xe \
         xsl
 # Copy configuration
 COPY config/php7.ini /usr/local/etc/php/conf.d/
-ENV RABBITMQ_VERSION v0.9.0
+ENV RABBITMQ_VERSION v0.10.0
 RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
         && cd /tmp/rabbitmq \
         && mkdir build && cd build \
         && cmake .. \
         && cmake --build . --target install
-ENV PHP_AMQP_VERSION v1.9.3
+ENV PHP_AMQP_VERSION v1.9.4
 RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.git /tmp/php-amqp \
         && cd /tmp/php-amqp \
         && phpize  \
@@ -86,7 +86,7 @@ RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.
         && make install
 # Copy configuration
 COPY config/amqp.ini /usr/local/etc/php/conf.d/
-ENV PHP_MONGO_VERSION 1.6.0
+ENV PHP_MONGO_VERSION 1.6.1
 RUN git clone --branch ${PHP_MONGO_VERSION} https://github.com/mongodb/mongo-php-driver /tmp/php-mongo \
         && cd /tmp/php-mongo \
         && git submodule sync && git submodule update --init \
@@ -96,7 +96,7 @@ RUN git clone --branch ${PHP_MONGO_VERSION} https://github.com/mongodb/mongo-php
         && make install \
         && make test
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
-ENV PHP_REDIS_VERSION 5.0.2
+ENV PHP_REDIS_VERSION 5.1.1
 RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
         && cd /tmp/phpredis \
         && phpize  \
