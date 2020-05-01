@@ -75,6 +75,12 @@ RUN set -xe \
         soap \
         iconv \
         xsl
+# Install php-ext-amqp
+RUN apk add --no-cache --no-progress --virtual BUILD_DEPS_PHP_AMQP rabbitmq-c-dev \
+    && apk add --no-cache --no-progress rabbitmq-c \
+    && apk add --no-cache git autoconf automake gawk build-base \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
 # Copy configuration
 COPY config/php7.ini /usr/local/etc/php/conf.d/
 ENV PHP_MONGO_VERSION 1.6.1
