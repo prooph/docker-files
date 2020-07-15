@@ -1,6 +1,6 @@
 # Environmental Variables
 ENV COMPOSER_HOME /root/composer
-ENV COMPOSER_VERSION master
+ENV COMPOSER_VERSION 1.10.8
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN set -xe \
@@ -12,7 +12,7 @@ RUN set -xe \
         unzip \
     && docker-php-ext-install \
         zip \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version $COMPOSER_VERSION \
     && composer global require hirak/prestissimo
 
 # Set up the command arguments
