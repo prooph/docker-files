@@ -1,6 +1,6 @@
 include(`macros.m4')
 DONT_CHANGE()
-FROM php:7.3-zts-alpine3.10
+FROM php:7.3-zts-alpine3.12
 
 include(`php-ext.m4')
 include(`php-ext-redis.m4')

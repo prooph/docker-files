@@ -49,14 +49,14 @@ parallel-build-dep:
 
 docker-pull:
 	docker pull php:7.1-cli-alpine3.10
-	docker pull php:7.2-cli-alpine3.10
-	docker pull php:7.3-cli-alpine3.10
-	docker pull php:7.4-cli-alpine3.10
+	docker pull php:7.2-cli-alpine3.12
+	docker pull php:7.3-cli-alpine3.12
+	docker pull php:7.4-cli-alpine3.12
 	docker pull php:7.1-fpm-alpine3.10
-	docker pull php:7.2-fpm-alpine3.10
-	docker pull php:7.3-fpm-alpine3.10
-	docker pull php:7.4-fpm-alpine3.10
+	docker pull php:7.2-fpm-alpine3.12
+	docker pull php:7.3-fpm-alpine3.12
+	docker pull php:7.4-fpm-alpine3.12
 	docker pull php:7.1-zts-alpine3.10
-	docker pull php:7.2-zts-alpine3.10
-	docker pull php:7.3-zts-alpine3.10
-	docker pull php:7.4-zts-alpine3.10
+	docker pull php:7.2-zts-alpine3.12
+	docker pull php:7.3-zts-alpine3.12
+	docker pull php:7.4-zts-alpine3.12
