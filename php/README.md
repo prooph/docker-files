@@ -21,7 +21,7 @@ Extends the official PHP image with the following PHP extensions:
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 
-> Each image has tags for 7.1, 7.2, 7.3 and 7.4
+> Each image has tags for 7.2, 7.3 and 7.4
 
 There are also PHP ZTS versions.
 
