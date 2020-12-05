@@ -71,19 +71,11 @@ RUN set -xe \
         xsl
 # Copy configuration
 COPY config/php7.ini /usr/local/etc/php/conf.d/
-ENV RABBITMQ_VERSION v0.10.0
-RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.git /tmp/rabbitmq \
-        && cd /tmp/rabbitmq \
-        && mkdir build && cd build \
-        && cmake .. \
-        && cmake --build . --target install
-ENV PHP_AMQP_VERSION v1.9.4
-RUN git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.git /tmp/php-amqp \
-        && cd /tmp/php-amqp \
-        && phpize  \
-        && ./configure  \
-        && make  \
-        && make install
+RUN apk add --no-cache --no-progress --virtual .build_deps_php_amqp rabbitmq-c-dev \
+    && apk add --no-cache --no-progress rabbitmq-c \
+    && apk add --no-cache git autoconf automake gawk build-base \
+    && pecl install amqp \
+    && apk del .build_deps_php_amqp
 # Copy configuration
 COPY config/amqp.ini /usr/local/etc/php/conf.d/
 RUN set -xe \
@@ -111,6 +103,28 @@ RUN git clone --branch ${PHP_PROTOBUF_VERSION} https://github.com/allegro/php-pr
 COPY config/protobuf.ini /usr/local/etc/php/conf.d/
 RUN pecl install swoole
 COPY config/swoole.ini /usr/local/etc/php/conf.d/
+ENV PHP_SIMDJSON_VERSION master
+# persistent / runtime deps
+ENV PHPIZE_DEPS \
+    autoconf \
+    g++ \
+    gcc \
+    make \
+    pkgconf \
+    git \
+    re2c
+RUN set -xe \
+    && apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+  && git clone --branch ${PHP_SIMDJSON_VERSION} https://github.com/crazyxman/simdjson_php /tmp/simdjson \
+        && cd /tmp/simdjson \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test
+# Copy configuration
+COPY config/simdjson.ini /usr/local/etc/php/conf.d/
 RUN apk del .build-deps \
     && rm -rf /tmp/* \
     && rm -rf /app \

@@ -39,7 +39,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     libxslt \
     # for mbstring
     oniguruma-dev \
-    libgcrypt 
+    libgcrypt
 
 RUN set -xe \
     # workaround for rabbitmq linking issue

@@ -18,10 +18,12 @@ Extends the official PHP image with the following PHP extensions:
 * soap
 * protobuf
 * swoole (cli only)
+* amqp
+* [simdjson](https://github.com/crazyxman/simdjson_php)
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 
-> Each image has tags for 7.2, 7.3 and 7.4
+> Each image has tags for 7.2, 7.3, 7.4 and 8.0
 
 There are also PHP ZTS versions.
 

@@ -51,9 +51,12 @@ docker-pull:
 	docker pull php:7.2-cli-alpine3.12
 	docker pull php:7.3-cli-alpine3.12
 	docker pull php:7.4-cli-alpine3.12
+	docker pull php:8.0-cli-alpine3.12
 	docker pull php:7.2-fpm-alpine3.12
 	docker pull php:7.3-fpm-alpine3.12
 	docker pull php:7.4-fpm-alpine3.12
+	docker pull php:8.0-fpm-alpine3.12
 	docker pull php:7.2-zts-alpine3.12
 	docker pull php:7.3-zts-alpine3.12
 	docker pull php:7.4-zts-alpine3.12
+	docker pull php:8.0-zts-alpine3.12
