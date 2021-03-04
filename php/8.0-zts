@@ -80,7 +80,16 @@ COPY config/php7.ini /usr/local/etc/php/conf.d/
 RUN set -xe \
     && pecl install mongodb
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
-#include(`php-ext-redis.m4')
+ENV PHP_REDIS_VERSION 5.3.3
+RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
+        && cd /tmp/phpredis \
+        && phpize  \
+        && ./configure  \
+        && make  \
+        && make install \
+        && make test
+# Copy configuration
+COPY config/redis.ini /usr/local/etc/php/conf.d/
 #include(`php-ext-protobuff.m4')
 RUN pecl install swoole
 COPY config/swoole.ini /usr/local/etc/php/conf.d/

@@ -74,7 +74,7 @@ COPY config/php7.ini /usr/local/etc/php/conf.d/
 RUN set -xe \
     && pecl install mongodb
 COPY config/mongodb.ini /usr/local/etc/php/conf.d/
-ENV PHP_REDIS_VERSION 5.3.1
+ENV PHP_REDIS_VERSION 5.3.3
 RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
         && cd /tmp/phpredis \
         && phpize  \
