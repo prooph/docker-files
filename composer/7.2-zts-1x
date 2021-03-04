@@ -3,7 +3,7 @@
 FROM prooph/php:7.2-zts
 # Environmental Variables
 ENV COMPOSER_HOME /root/composer
-ENV COMPOSER_VERSION 1.10.19
+ENV COMPOSER_VERSION 1.10.20
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN set -xe \
     # use own name or other previous .persistent-deps will be removed
