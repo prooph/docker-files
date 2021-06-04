@@ -13,6 +13,7 @@ Extends the official PHP image with the following PHP extensions and installs Co
 * mbstring
 * mongodb
 * pcntl
+* parallel
 * amqp
 * redis
 * zip
@@ -33,12 +34,6 @@ Use the following image: `prooph/composer:7.4`.
 ## Composer with PHP 7.3
 Use the following image: `prooph/composer:7.3`.
 
-## Composer with PHP 7.2
-Use the following image: `prooph/composer:7.2`.
-
-## Composer with PHP 7.1
-Use the following image: `prooph/composer:7.1`.
-
 ## Composer with PHP ZTS 8.0
 Use the following image: `prooph/composer:8.0-zts`.
 
@@ -47,9 +42,3 @@ Use the following image: `prooph/composer:7.4-zts`.
 
 ## Composer with PHP ZTS 7.3
 Use the following image: `prooph/composer:7.3-zts`.
-
-## Composer with PHP ZTS 7.2
-Use the following image: `prooph/composer:7.2-zts`.
-
-## Composer with PHP ZTS 7.1
-Use the following image: `prooph/composer:7.1-zts`.

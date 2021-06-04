@@ -1,6 +1,6 @@
 # Environmental Variables
 ENV COMPOSER_HOME /root/composer
-ENV COMPOSER_VERSION 1.10.20
+ENV COMPOSER_VERSION 1.10.22
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN set -xe \
@@ -10,6 +10,7 @@ RUN set -xe \
         libzip-dev \
         git \
         unzip \
+        openssh-client \
     && docker-php-ext-install \
         zip \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version $COMPOSER_VERSION \
