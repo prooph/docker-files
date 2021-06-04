@@ -1,6 +1,6 @@
 include(`macros.m4')
 DONT_CHANGE()
-FROM php:7.4-cli-alpine3.12
+FROM php:7.4-cli-alpine3.13
 
 include(`php-ext-7.4.m4')
 include(`php-ext-mongodb.m4')

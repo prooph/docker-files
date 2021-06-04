@@ -13,6 +13,7 @@ Extends the official PHP image with the following PHP extensions:
 * mbstring
 * mongodb
 * pcntl
+* parallel
 * amqp
 * redis
 * soap
@@ -23,7 +24,7 @@ Extends the official PHP image with the following PHP extensions:
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 
-> Each image has tags for 7.2, 7.3, 7.4 and 8.0
+> Each image has tags for 7.3, 7.4 and 8.0
 
 There are also PHP ZTS versions.
 

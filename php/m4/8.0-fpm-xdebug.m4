@@ -2,4 +2,4 @@ include(`macros.m4')
 DONT_CHANGE()
 FROM prooph/php:8.0-fpm
 
-include(`fpm-xdebug-beta.m4')
+include(`fpm-xdebug.m4')
