@@ -2,9 +2,10 @@
 # Change it in m4 folder
 FROM prooph/php:8.0-zts
 # Environmental Variables
-ENV COMPOSER_HOME /root/composer
-ARG COMPOSER_VERSION 2.0.14
-ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_HOME=/root/composer
+ARG COMPOSER_VERSION=2.0.14
+#ENV COMPOSER_VERSION=${COMPOSER_VERSION}
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN set -xe \
     # use own name or other previous .persistent-deps will be removed
     && apk add --no-cache --virtual .persistent-deps-composer \
