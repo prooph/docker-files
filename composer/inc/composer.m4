@@ -1,7 +1,7 @@
 # Environmental Variables
-ENV COMPOSER_HOME /root/composer
-ENV COMPOSER_VERSION 1.10.22
-ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_HOME=/root/composer
+ARG COMPOSER_VERSION=1.10.22
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN set -xe \
     # use own name or other previous .persistent-deps will be removed
