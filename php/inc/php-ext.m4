@@ -36,18 +36,24 @@ RUN apk add --no-cache --virtual .persistent-deps \
     freetype \
     libpng \
     libjpeg-turbo \
-    libxslt
+    libxslt \
+    # for mbstring
+    oniguruma-dev \
+    libgcrypt
 
 RUN set -xe \
     # workaround for rabbitmq linking issue
     && ln -s /usr/lib /usr/local/lib64 \
+    # hack to link libgcrypt
+    && ln -s /usr/lib/libgcrypt.so.20 /usr/lib/libgcrypt.so \
+    && ln -s /usr/lib/libgpg-error.so.0 /usr/lib/libgpg-error.so \
     && apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
+    # 7.4 changes https://github.com/php/php-src/blob/PHP-7.4/UPGRADING
     && docker-php-ext-configure gd \
-        --with-gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
+        --enable-gd \
+        --with-freetype=/usr/include/ \
+        --with-jpeg=/usr/include/ \
     && docker-php-ext-configure bcmath --enable-bcmath \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure pcntl --enable-pcntl \
@@ -66,7 +72,6 @@ RUN set -xe \
         pdo_pgsql \
         mbstring \
         soap \
-        iconv \
         xsl
 
 # Copy configuration
