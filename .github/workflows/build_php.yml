@@ -1,0 +1,48 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+name: "Build PHP Docker Images"
+
+jobs:
+  build-and-push-docker:
+    name: "Build PHP Docker Images"
+
+    runs-on: ${{ matrix.operating-system }}
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
+          - "8.0"
+          - "8.1"
+        php-target:
+          - "cli"
+          - "fpm"
+          - "zts"
+        operating-system:
+          - "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@master
+
+      - name: "Install Docker Composer 2.x"
+        run: |
+          curl -fL https://raw.githubusercontent.com/docker/compose-switch/master/install_on_linux.sh | sudo sh
+          sudo  update-alternatives --display docker-compose
+          docker -v
+          docker-compose -v
+
+      - name: "Build ${{ matrix.php-target }} ${{ matrix.php-version }}"
+        working-directory: php
+        env:
+          PHP_VERSION: ${{ matrix.php-version }}
+          PHP_TARGET: ${{ matrix.php-target }}
+          DOCKER_REGISTRY: "prooph/docker-files/"
+        run: docker-compose build
+
+      - name: "Cleanup"
+        run: rm /home/runner/.docker/config.json

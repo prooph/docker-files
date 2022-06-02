@@ -1,0 +1,53 @@
+---
+# PHP_TARGET can be cli, fpm or zts
+# PHP_VERSION can be any base PHP docker image version e.g. 7.4, 8.0, 8.1 etc.
+# DOCKER_REGISTRY is only needed for publishing the Docker images to a registry and can be empty
+
+services:
+  php:
+    image: ${DOCKER_REGISTRY}php:${PHP_VERSION}-${PHP_TARGET}
+    build:
+      dockerfile: php-${PHP_TARGET}
+      target: php-${PHP_TARGET}
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+
+  php-blackfire:
+    image: ${DOCKER_REGISTRY}php:${PHP_VERSION}-${PHP_TARGET}-blackfire
+    build:
+      dockerfile: php-${PHP_TARGET}
+      target: php-${PHP_TARGET}-blackfire
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+
+  php-opcache:
+    image: ${DOCKER_REGISTRY}php:${PHP_VERSION}-${PHP_TARGET}-opcache
+    build:
+      dockerfile: php-${PHP_TARGET}
+      target: php-${PHP_TARGET}-opcache
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+
+  php-xdebug:
+    image: ${DOCKER_REGISTRY}php:${PHP_VERSION}-${PHP_TARGET}-xdebug
+    build:
+      dockerfile: php-${PHP_TARGET}
+      target: php-${PHP_TARGET}-xdebug
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+
+  composer:
+    image: ${DOCKER_REGISTRY}composer:${PHP_VERSION}-${PHP_TARGET}
+    build:
+      dockerfile: php-${PHP_TARGET}
+      target: composer-${PHP_TARGET}
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+
+  composer1x:
+    image: ${DOCKER_REGISTRY}composer:${PHP_VERSION}-${PHP_TARGET}-1x
+    build:
+      dockerfile: php-${PHP_TARGET}
+      target: composer-${PHP_TARGET}-1x
+      args:
+        PHP_VERSION: ${PHP_VERSION}

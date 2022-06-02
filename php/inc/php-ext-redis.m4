@@ -1,4 +1,4 @@
-ENV PHP_REDIS_VERSION 5.3.3
+ENV PHP_REDIS_VERSION 5.3.7
 
 RUN git clone --branch ${PHP_REDIS_VERSION} https://github.com/phpredis/phpredis /tmp/phpredis \
         && cd /tmp/phpredis \
