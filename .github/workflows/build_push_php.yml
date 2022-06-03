@@ -42,30 +42,30 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.php-version }}
           PHP_TARGET: ${{ matrix.php-target }}
-          DOCKER_REGISTRY: "prooph/docker-files/"
+          DOCKER_REGISTRY: "ghcr.io/prooph/docker-files/"
         run: docker-compose build
 
-      - name: "Login GitHub package registry"
-        working-directory: php
-        env:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: docker login ghcr.io -u $DOCKER_USERNAME -p "$DOCKER_TOKEN"
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "Push images"
+      - name: "Push PHP images to ghcr.io"
         working-directory: php
         env:
           PHP_VERSION: ${{ matrix.php-version }}
           PHP_TARGET: ${{ matrix.php-target }}
-          DOCKER_REGISTRY: "prooph/docker-files/"
+          DOCKER_REGISTRY: "ghcr.io/prooph/docker-files/"
         run: "docker-compose push"
 
-      - name: "Push Composer"
+      - name: "Push Composer images to ghcr.io"
         working-directory: php
         env:
           PHP_VERSION: ${{ matrix.php-version }}
           PHP_TARGET: ${{ matrix.php-target }}
-          DOCKER_REGISTRY: "prooph/docker-files/"
+          DOCKER_REGISTRY: "ghcr.io/prooph/docker-files/"
         if: ${{ matrix.php-target }} == 'cli'
         run: |
           docker tag ${DOCKER_REGISTRY}composer:${PHP_VERSION}-${PHP_TARGET} ${DOCKER_REGISTRY}composer:${PHP_VERSION}
