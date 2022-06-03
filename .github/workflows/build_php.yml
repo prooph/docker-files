@@ -1,8 +1,5 @@
 on:
   pull_request:
-  push:
-    branches:
-      - master
 
 name: "Build PHP Docker Images"
 
@@ -44,6 +41,3 @@ jobs:
           PHP_TARGET: ${{ matrix.php-target }}
           DOCKER_REGISTRY: "prooph/docker-files/"
         run: docker-compose build
-
-      - name: "Cleanup"
-        run: rm /home/runner/.docker/config.json
