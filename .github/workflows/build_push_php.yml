@@ -7,6 +7,10 @@ on:
 
 name: "Build And Push PHP Docker Images"
 
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
 jobs:
   build-and-push-docker:
     name: "Build And Push PHP Docker Images"
