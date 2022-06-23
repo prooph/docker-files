@@ -177,8 +177,7 @@ COPY config/xdebug-cli.ini /usr/local/etc/php/conf.d/
 FROM php-zts as composer-zts
 # Environmental Variables
 ENV COMPOSER_HOME=/root/composer
-ARG COMPOSER_VERSION=2.3.5
-#ENV COMPOSER_VERSION=${COMPOSER_VERSION}
+ARG COMPOSER_VERSION=2.3.7
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN set -xe \
     # use own name or other previous .persistent-deps will be removed
