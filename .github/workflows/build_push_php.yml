@@ -67,7 +67,7 @@ jobs:
           PHP_VERSION: ${{ matrix.php-version }}
           PHP_TARGET: ${{ matrix.php-target }}
           DOCKER_REGISTRY: "ghcr.io/prooph/docker-files/"
-        if: ${{ matrix.php-target }} == 'cli' || ${{ matrix.php-target }} == 'zts'
+        if: matrix.php-target == 'cli' || matrix.php-target == 'zts'
         run: |
           docker tag ${DOCKER_REGISTRY}composer:${PHP_VERSION}-${PHP_TARGET} ${DOCKER_REGISTRY}composer:${PHP_VERSION}
           docker push ${DOCKER_REGISTRY}composer:${PHP_VERSION}
@@ -104,7 +104,7 @@ jobs:
           PHP_TARGET: ${{ matrix.php-target }}
           DOCKER_REGISTRY: "ghcr.io/prooph/docker-files/"
           DOCKER_HUB_REGISTRY: "prooph/"
-        if: ${{ matrix.php-target }} == 'cli' || ${{ matrix.php-target }} == 'zts'
+        if: matrix.php-target == 'cli' || matrix.php-target == 'zts'
         run: |
           docker tag ${DOCKER_REGISTRY}composer:${PHP_VERSION}-${PHP_TARGET} ${DOCKER_HUB_REGISTRY}composer:${PHP_VERSION}
           docker push ${DOCKER_HUB_REGISTRY}composer:${PHP_VERSION}
