@@ -1,8 +1,8 @@
 include(`macros.m4')
 DONT_CHANGE()
 
-ARG ALPINE_VERSION=3.15
-ARG PHP_VERSION=8.0
+ARG ALPINE_VERSION=3.16
+ARG PHP_VERSION=8.2
 
 ########
 # base #

@@ -19,7 +19,8 @@ ENV PHPIZE_DEPS \
     libxslt-dev \
     # for intl extension
     icu-dev \
-    openssl-dev
+    openssl-dev \
+    linux-headers
 
 RUN apk add --no-cache --virtual .persistent-deps \
     # for intl extension

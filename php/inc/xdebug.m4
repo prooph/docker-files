@@ -5,7 +5,8 @@ ENV PHPIZE_DEPS \
     gcc \
     make \
     pkgconf \
-    re2c
+    re2c \
+    linux-headers
 
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps \
