@@ -26,7 +26,7 @@ Extends the official PHP image with the following PHP extensions:
 
 See [prooph/proophessor-do app](https://github.com/prooph/proophessor-do) for an example.
 
-> Each image has tags for 7.4, 8.0, 8.1 and 8.2
+> Each image has tags for 7.4, 8.0, 8.1, 8.2 and 8.3.
 
 There are also PHP ZTS versions.
 
@@ -110,6 +110,9 @@ To run Composer use:
 ```bash
 $ docker run --rm -it --volume $(pwd):/app prooph/composer:7.4 [your composer command]
 ```
+
+## Composer with PHP 8.3
+Use the following image: `prooph/composer:8.3`.
 
 ## Composer with PHP 8.2
 Use the following image: `prooph/composer:8.2`.
