@@ -39,6 +39,7 @@ docker-push:
 docker-pull:
 	docker pull php:8.0-cli-alpine3.16
 	docker pull php:8.1-cli-alpine3.16
+	docker pull php:8.2-cli-alpine3.16
 	docker pull php:8.0-fpm-alpine3.16
 	docker pull php:8.1-fpm-alpine3.16
 	docker pull php:8.2-fpm-alpine3.16
